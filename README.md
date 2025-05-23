@@ -10,24 +10,24 @@ _Forked from [Satellite.earth](https://github.com/lovvtide/satellite-web)_
 Citadel Academy is the educational platform and credentialing frontend for sovereign families and communities, built as part of the [Rebuilding Camelot](https://github.com/rebuilding-camelot) initiative. Forked from the robust, open-source [Satellite.earth](https://github.com/lovvtide/satellite-web) Nostr client, Citadel Academy extends these foundations to deliver a secure, family-first learning management system and verifiable credentialing solution.
 
 **Value Proposition:**  
-Citadel Academy empowers families and individuals to build, preserve, and prove their knowledge and achievements—securely and independently. We offer free, open-source courses, verifiable digital credentials, and sovereign identity tools so anyone can own their learning journey and legacy, without relying on centralized institutions.
+Citadel Academy empowers families and individuals to build, preserve, and prove their knowledge and achievements—securely and independently. We offer free/paid, open-source courses, verifiable digital credentials, and sovereign identity tools so every family can own their cognitive capital and cultivate dynastic family legacies, without relying on centralized institutions.
 
 ---
 
 ## Key Features
 
 - **Open-Source Curriculum:**  
-  Integrates foundational courses like My First Bitcoin, with modular expansion for advanced topics.
+  Integrates foundational courses ranging from My First Bitcoin, Noderunning, and V4V satstreaming, to business structuring for privacy, security, and tax efficiencey, to decentralizing manufacturing and energy, and off-grid infrastructure, with modular expansion for advanced topics.
 - **Verifiable Credentials:**  
-  Issue and display Nostr-based digital badges and certificates for course completion, anchored to user-controlled Satnam.pub identities.
+  Issue and display Nostr-based digital badges and certificates for course completion, anchored to user-controlled Nostr IDs/LN addresses, w/physical NFC tap-2-sign/pay upgrades.
 - **Sovereign Identity:**  
   Leverage Satnam.pub for secure, user-owned authentication and credentialing.
 - **User Dashboard:**  
   Each learner can view, share, and verify their achievements and credentials.
 - **Family & Community Focus:**  
-  Designed for multi-generational learning, credentialing, and knowledge preservation.
+  Designed for cultivating multi-generational knowledge/skills, self-custodied credentials, and wealth preservation across ALL forms of capital.
 - **Bitcoin-Native:**  
-  Integrates Lightning payments, Fedimint, and programmable Bitcoin rewards for educational milestones.
+  Integrates Lightning payments, Nostr zaps, Fedimint eCash, and programmable Bitcoin rewards for educational milestones.
 
 ---
 
@@ -44,13 +44,14 @@ Citadel Academy empowers families and individuals to build, preserve, and prove 
 - Satnam.pub login/authentication
 - Nostr badge issuance for course completion
 - NIP-05 endpoint for identity verification
+- Pubky Core integration woven into Nostr ecosystem
 - Credential verification page
 
 **Phase 3: Expansion & Family Features**
 - Family/group accounts and credentialing
 - Knowledge Vault for family stories, documents, and wisdom (IPFS integration)
 - Mentor/teacher roles for guided learning
-- Mobile-friendly dashboard
+- Mobile-friendly dashboard (Dynastic.me mobile Nostr client)
 
 **Phase 4: Ecosystem Integration & Partnerships**
 - API endpoints for external credential verification
