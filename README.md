@@ -1,3 +1,38 @@
+# Citadel Academy
+
+**Sovereign Family Learning & Credentialing Platform**  
+A Nostr-native educational ecosystem empowering families to own their learning journey, credentials, and legacy.
+
+> *"The best time to plant a tree was 20 years ago. The second best time is now."*  
+> – Chinese Proverb
+
+[![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple)](https://nostr.com)
+[![Powered by Bitcoin](https://img.shields.io/badge/Powered%20by-Bitcoin-orange)](https://bitcoin.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+---
+
+## 🏰 Vision
+
+Citadel Academy transforms education from institutional control to family sovereignty. Built on Nostr's decentralized infrastructure, we enable:
+
+- **🎓 Self-Sovereign Learning**: Own your educational records forever
+- **👨‍👩‍👧‍👦 Family-First Design**: Multi-generational knowledge preservation
+- **🏅 Verifiable Credentials**: NIP-58 badges that can't be censored or revoked
+- **⚡ Bitcoin-Native**: Lightning payments for premium content and mentorship
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ ([Download](https://nodejs.org/))
+- Git ([Download](https://git-scm.com/))
+- A Nostr identity (create one at [Satnam.pub](https://satnam.pub))
+
+### Installation
+```
+
 ## 🏗️ Built With
 
 ### Core Infrastructure
