@@ -1,10 +1,10 @@
 ::selection {
-  background: rgba(62, 137, 184, 0.5)!important;
+  background: rgba(0, 83, 159, 0.5)!important;
   color: #fff!important;
 }
 
 ::-moz-selection {
-  background: rgba(62, 137, 184, 0.5)!important;
+  background: rgba(0, 83, 159, 0.5)!important;
   color: #fff!important;
 }
 @font-face {
@@ -26,8 +26,8 @@
 }
 body {
   font-family: 'Lexend-Deca-Regular';
-  background: rgb(23, 24, 25);
-  color: #fff;
+  background: rgb(240, 240, 240);
+  color: rgb(50, 50, 50);
   margin: 0;
   -webkit-overflow-scrolling: touch;
 }

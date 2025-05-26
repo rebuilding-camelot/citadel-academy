@@ -29,6 +29,8 @@ import SignIn from './components/SignIn';
 import QRDisplay from './components/QRDisplay';
 import MobileNav from './components/MobileNav';
 import Nav from './components/Nav';
+import CourseViewerPage from './components/CourseViewerPage';
+import DashboardPage from './components/DashboardPage';
 
 
 class App extends Component {
@@ -142,6 +144,8 @@ class App extends Component {
           <Route path='/auth/:mode' component={SignIn} />
           <Route path='/@:alias' component={ProfileFeed} />
         </div>
+        <Route exact path='/courses' component={CourseViewerPage} />
+        <Route exact path='/dashboard' component={DashboardPage} />
         <Route exact path='/cdn' component={MediaHosting} />
         <Route exact path='/verify' component={ComingSoon} />
         <Route exact path='/theory' component={ComingSoon} />

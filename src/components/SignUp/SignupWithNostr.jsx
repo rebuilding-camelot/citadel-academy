@@ -418,10 +418,10 @@ class SignupWithNostr extends Component {
 						color: '#fff'
 					}}
 				>
-					Join Satellite
+					Join Citadel Academy
 				</div>
 					<div style={{ marginBottom: mobile ? 0 : 18, color: 'rgba(255,255,255,0.85)', marginTop: mobile ? 0 : -4, fontSize: 13, fontFamily: 'Lexend-Deca-Regular' }}>
-						{`Your identify on Satellite is defined by a secret key, enabling you to retain full control of your social profile. If you generate a new key, be sure to save a copy somewhere safe because you'll need it to sign in.`} <Link to={'/register/info'}><span onMouseOver={() => this.setState({ hover: 'info' })} onMouseOut={() => this.setState({ hover: '' })} style={{ color: COLORS.secondaryBright, fontStyle: 'italic', opacity: this.state.hover === 'info' ? 1 : 0.85 }}>{this.props.mobile ? 'Why is this important?' : 'Why is this important?'}</span></Link>
+						{`Your identify on Citadel Academy is defined by a secret key, enabling you to retain full control of your social profile. If you generate a new key, be sure to save a copy somewhere safe because you'll need it to sign in.`} <Link to={'/register/info'}><span onMouseOver={() => this.setState({ hover: 'info' })} onMouseOut={() => this.setState({ hover: '' })} style={{ color: COLORS.secondaryBright, fontStyle: 'italic', opacity: this.state.hover === 'info' ? 1 : 0.85 }}>{this.props.mobile ? 'Why is this important?' : 'Why is this important?'}</span></Link>
 					</div>
 			</div>
 		);
@@ -436,7 +436,7 @@ class SignupWithNostr extends Component {
 					<Icon style={{ color: '#fff' }} name='chevron right' />
 					<span style={{ color: '#fff', fontSize: 13, opacity: 0.85 }}>
 						We've detected a nostr extension in your browser. Do you want to link your
-						Satellite ID to the public key from the extension, or use another key?
+						Citadel Academy ID to the public key from the extension, or use another key?
 					</span>
 					<div style={{ display: 'flex', marginTop: 10 }}>
 						<Button
@@ -656,7 +656,7 @@ class SignupWithNostr extends Component {
 					architecture of social platforms to ensure that our digital identities may be controlled only by those individuals to whom they belong.
 				</p>
 				<p>
-					Satellite is built on a new protocol called <a href='https://github.com/nostr-protocol/nostr' target='_blank'>nostr</a>, which, instead of relying on centralized platforms to store and authenticate user data,
+					Citadel Academy is built on a new protocol called <a href='https://github.com/nostr-protocol/nostr' target='_blank'>nostr</a>, which, instead of relying on centralized platforms to store and authenticate user data,
 					works by publicly linking your ID (and by extension other things that you publish) to a secret cryptographic key that only you possess and widely distributing this data on a network of independent, community-operated relays.
 				</p>
 				<p>
@@ -667,7 +667,7 @@ class SignupWithNostr extends Component {
 					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>It's completely up to you whether you want your profile linked to your real name</li>
 					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>You can send encrypted direct messages to anyone (since you know their public key)</li>
 					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>It is impossible for anyone to impersonate you (since only you know your secret key)</li>
-					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>You can never be completely "deplatformed" by any authority (not even Satellite)</li>
+					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>You can never be completely "deplatformed" by any authority (not even Citadel Academy)</li>
 					<li style={{ marginBottom: this.props.mobile ? 8 : 0 }}>Your profile can be shared across any application that supports nostr protocol</li>
 				</ul>
 				<p>

@@ -83,7 +83,7 @@ class WelcomeContent extends Component {
 							</div>
 						</div>
 						<div style={{ opacity: 0.25, marginLeft: 24, color: 'rgba(255,255,255,0.85)', fontSize: 13, marginTop: 38 }}>
-							Satellite is being developed by <a style={styles.link} onClick={e => { e.preventDefault(); this.props.navigate(`/@npub1lunaq893u4hmtpvqxpk8hfmtkqmm7ggutdtnc4hyuux2skr4ttcqr827lj`) }} href={`https://satellite.earth/@npub1lunaq893u4hmtpvqxpk8hfmtkqmm7ggutdtnc4hyuux2skr4ttcqr827lj`}>Stuart Bowman</a>
+							Citadel Academy is being developed by <a style={styles.link} onClick={e => { e.preventDefault(); this.props.navigate(`/@npub1lunaq893u4hmtpvqxpk8hfmtkqmm7ggutdtnc4hyuux2skr4ttcqr827lj`) }} href={`https://satellite.earth/@npub1lunaq893u4hmtpvqxpk8hfmtkqmm7ggutdtnc4hyuux2skr4ttcqr827lj`}>Stuart Bowman</a>
 						</div>
 					</div>
 				</div>
