@@ -459,7 +459,7 @@ const styles = {
 			position: 'absolute',
 			top: 0,
 			left: 0,
-			borderBottom: '1px solid #2f363d',
+			borderBottom: `1px solid ${COLORS.secondary}`,
 			pointerEvents: mobileEditor.open ? 'none' : 'auto',
       opacity: mobileEditor.open ? 0 : 1
 		};
@@ -509,7 +509,7 @@ const styles = {
 			float: 'right',
 			marginTop: 11,
 			marginLeft: mobile ? 12 : 8,
-			border: '1px solid rgb(47, 54, 61)',
+			border: `1px solid ${COLORS.secondary}`,
 			padding: mobile ? '7px 8px 6px' : '7px 10px 6px',
 			fontFamily: 'JetBrains-Mono-Bold',
 			fontSize: 11,

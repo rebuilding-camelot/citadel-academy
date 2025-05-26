@@ -24,11 +24,11 @@ export const DEFAULT_RELAYS = [
 ];
 
 export const COLORS = {
-	primary: 'rgb(23, 24, 25)',
-	secondary: 'rgb(47, 54, 61)',
-	secondaryBright: 'rgb(105, 116, 128)',
-	satelliteGold: 'rgb(219, 170, 49)',
-	blue: 'rgb(62, 137, 184)',
+	primary: 'rgb(240, 240, 240)',
+	secondary: 'rgb(220, 220, 220)',
+	secondaryBright: 'rgb(150, 150, 150)',
+	satelliteGold: 'rgb(0, 83, 159)',
+	blue: 'rgb(0, 123, 255)',
 	red: 'rgb(219, 40, 40)',
 	green: 'rgb(40, 167, 69)'
 };

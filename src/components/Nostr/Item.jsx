@@ -731,7 +731,7 @@ class Item extends PureComponent {
 						<ToolTip
 							iconStyle={styles.tooltip}
 							position='top center'
-							text={`This is the direct link to load this event and its replies on Satellite`}
+							text={`This is the direct link to load this event and its replies on Citadel Academy`}
 						/>
 					</span>
 					<CanonicalValue

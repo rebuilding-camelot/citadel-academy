@@ -71,7 +71,7 @@ class Preferences extends Component {
 					qr={!this.props.mobile}
 				/>
 				<div style={styles.sectionInfo}>
-					ⓘ Your name on Satellite is an alias of your public key which can be
+					ⓘ Your name on Citadel Academy is an alias of your public key which can be
 					shared across any application that supports the nostr protocol.
 				</div>
 			</div>
