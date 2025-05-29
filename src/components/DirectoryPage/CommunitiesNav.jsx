@@ -21,11 +21,11 @@ class CommunitiesNav extends Component {
 		const navStyle = ({ active }) => {
 			return {
 				cursor: 'pointer',
-				color: active ? '#fff' : COLORS.secondaryBright,
+				color: active ? '#ffa500' : '#fff', /* Changed to gold (#ffa500) when active, white otherwise */
 				fontSize: mobile ? 14 : 13,
 				fontWeight: 'bold',
 				fontFamily: 'Lexend-Deca-Regular',
-				borderBottom: this.props.mobile ? 'none' : `2px solid ${active ? '#fff' : 'transparent'}`,
+				borderBottom: this.props.mobile ? 'none' : `2px solid ${active ? '#ffa500' : 'transparent'}`, /* Changed border to gold */
 				paddingBottom: this.props.mobile ? 0 : 2
 				//marginBottom: 3
 			};
@@ -34,7 +34,10 @@ class CommunitiesNav extends Component {
 		return (
 			<div
 				id={this.props.id}
-				style={this.props.style}
+				style={{
+					...this.props.style,
+					background: '#2a0066' /* Changed to dark purple to match header */
+				}}
 			>
 				{/*this.props.mobile*/true ? null : (<div
 					style={{
@@ -75,6 +78,16 @@ class CommunitiesNav extends Component {
 					style={navStyle({ active: communitiesNavMode === 'subscribed' })}
 				>
 					Subscribed
+				</div>
+				<div style={{
+					marginLeft: mobile ? 12 : 8,
+					marginRight: mobile ? 12 : 8,
+				}} />
+				<div
+					onClick={() => this.handleSelectCommunityNav('families')}
+					style={navStyle({ active: communitiesNavMode === 'families' })}
+				>
+					Families
 				</div>
 			</div>
 		);

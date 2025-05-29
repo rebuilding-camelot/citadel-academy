@@ -234,11 +234,11 @@ class PublicationsNav extends Component {
 		const navStyle = ({ active }) => {
 			return {
 				cursor: 'pointer',
-				color: active ? '#fff' : COLORS.secondaryBright,
+				color: active ? '#ffa500' : '#fff', /* Changed to gold (#ffa500) when active, white otherwise */
 				fontSize: this.props.mobile ? 14 : 13,
 				fontFamily: 'Lexend-Deca-Regular',
 				fontWeight: 'bold',
-				borderBottom: this.props.mobile ? 'none' : `2px solid ${active ? '#fff' : 'transparent'}`,
+				borderBottom: this.props.mobile ? 'none' : `2px solid ${active ? '#ffa500' : 'transparent'}`, /* Changed border to gold */
 				paddingBottom: this.props.mobile ? 0 : 2,
 
 				// background: active ? '#fff' : 'none',
@@ -319,7 +319,7 @@ const styles = {
 			display: 'flex',
 			justifyContent: mobile ? 'center' : 'left',
 			alignItems: 'center',
-			background: COLORS.primary,
+			background: '#2a0066', /* Changed from COLORS.primary to dark purple to match header */
 			position: 'absolute',
 			top: NAV_HEIGHT,
 			width: mobile ? '100%' : (expanded ? contentWidth * 0.35 : '0px'),

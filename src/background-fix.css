@@ -143,7 +143,7 @@ div[class*="Fade"],
 div[class*="Grow"],
 div[class*="Slide"],
 div[class*="Zoom"] {
-  background-color: #e6e6fa !important;
+  background-color: #8B5CF6 !important; /* Changed from #e6e6fa to match academy title */
   background-image: none !important;
 }
 
@@ -214,7 +214,7 @@ button,
 .ui.cards, 
 .ui.modal, 
 .ui.modals {
-  background-color: #e6e6fa !important;
+  background-color: #8B5CF6 !important; /* Changed from #e6e6fa to match academy title */
   border-color: #0053a0 !important;
 }
 
@@ -225,6 +225,6 @@ button,
 [style*="background: white"],
 [style*="background: #fff"],
 [style*="background: #ffffff"] {
-  background-color: #e6e6fa !important;
-  background: #e6e6fa !important;
+  background-color: #8B5CF6 !important; /* Changed from #e6e6fa to match academy title */
+  background: #8B5CF6 !important; /* Changed from #e6e6fa to match academy title */
 }
