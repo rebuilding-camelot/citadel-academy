@@ -1,3 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
 ::selection {
   background: rgba(0, 83, 159, 0.5)!important;
   color: #fff!important;
@@ -26,10 +77,36 @@
 }
 body {
   font-family: 'Lexend-Deca-Regular';
-  background: rgb(240, 240, 240);
+  background: rgb(230, 230, 250); /* Light purple background */
   color: rgb(50, 50, 50);
   margin: 0;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Citadel Academy specific styles */
+#main_nav {
+  background-color: #0053a0 !important; /* Citadel Blue */
+  color: white !important;
+}
+
+#main_nav a, #main_nav div, #main_nav span, #main_nav button {
+  color: white !important;
+}
+
+/* Make sure buttons are visible */
+button, .ui.button {
+  background-color: #0053a0 !important;
+  color: white !important;
+}
+
+/* Make sure text is visible on light purple background */
+.text-content {
+  color: #333 !important;
+}
+
+.branding img, .nav-logo, #main_nav img {
+  height: 36px !important;
+  margin-top: -6px !important;
 }
 code {
   background: rgb(47, 54, 61, 0.75);

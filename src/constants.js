@@ -28,6 +28,8 @@ export const COLORS = {
 	secondary: 'rgb(220, 220, 220)',
 	secondaryBright: 'rgb(150, 150, 150)',
 	satelliteGold: 'rgb(0, 83, 159)',
+	citadelBlue: 'rgb(0, 83, 159)',
+	lightPurple: 'rgb(230, 230, 250)',
 	blue: 'rgb(0, 123, 255)',
 	red: 'rgb(219, 40, 40)',
 	green: 'rgb(40, 167, 69)'

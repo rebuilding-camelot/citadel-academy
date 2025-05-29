@@ -8,7 +8,7 @@ import AliasMenu from './AliasMenu';
 import PrettySVG from '../common/PrettySVG';
 import Image from '../Nostr/Image';
 
-import logo from '../../assets/branding.png';
+import logo from '../../assets/citadel-logo.png';
 import svgfrontpage from '../../assets/frontpage.svg';
 import svgstaroutline from '../../assets/star_outline.svg';
 import svgearth from '../../assets/earth.svg';
@@ -96,10 +96,13 @@ class Nav extends Component {
 				onClick={() => { this.props.setDirectoryLayoutExpanded(true); }}
 			>
 				<Link to='/'>
-					<PrettySVG
+					<img
 						onClick={this.props._showLandingPage ? () => { this.props.showLandingPage(false); } : null}
 						src={logo}
-						height={24}
+						height={36}
+						style={{ marginTop: -6 }}
+						alt="Citadel Academy Logo"
+						className="nav-logo"
 					/>
 				</Link>
 			</div>
@@ -254,7 +257,7 @@ class Nav extends Component {
 				onMouseOut={() => this.setState({ hover: '' })}
 				style={{
 					...styles.signUp(this.state.hover === 'signin', false, mobile),
-					color: window.nostr || this.state.nostrDetected ? COLORS.satelliteGold : '#fff'
+					color: '#fff'
 				}}
 			>
 				{window.nostr || this.state.nostrDetected ? 'CONNECT NOSTR' : 'SIGN IN'}
@@ -459,6 +462,7 @@ const styles = {
 			position: 'absolute',
 			top: 0,
 			left: 0,
+			backgroundColor: '#0053a0', /* Citadel Blue */
 			borderBottom: `1px solid ${COLORS.secondary}`,
 			pointerEvents: mobileEditor.open ? 'none' : 'auto',
       opacity: mobileEditor.open ? 0 : 1
@@ -528,7 +532,7 @@ const styles = {
 
 	branding: {
 		userSelect: 'none',
-		marginTop: 11,
+		marginTop: 6,
 		float: 'left'
 	},
 

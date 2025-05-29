@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import { initialize, showAliasMenuMobile, windowResize, handleNostrPublish, openReplyModal } from './actions';
-import { NAV_HEIGHT } from './constants';
+import { NAV_HEIGHT, COLORS } from './constants';
 import { transition } from './helpers';
+
+import ShadcnDemo from './components/ShadcnDemo';
 
 import CommunityForks from './components/Nostr/CommunityForks';
 import CommunityList from './components/Nostr/CommunityList';
@@ -117,7 +119,9 @@ class App extends Component {
       <div style={{
         WebkitFontSmoothing: 'antialiased',
         MozOsxFontSmoothing: 'grayscale',
-        minHeight
+        minHeight,
+        backgroundColor: COLORS.lightPurple,
+        color: '#000'
       }}>
         {mobile ? null : <div id='media_graph' style={{ zIndex: 1, position: 'absolute', left: '50%', transform: `translate(-50%, ${NAV_HEIGHT * -1}px)`, visibility: 'hidden' }} />}
         {this.props.zapRequest ? <ZapRequest /> : null}
@@ -150,6 +154,7 @@ class App extends Component {
         <Route exact path='/verify' component={ComingSoon} />
         <Route exact path='/theory' component={ComingSoon} />
         <Route exact path='/ln' component={ComingSoon} />
+        <Route exact path='/ui' component={ShadcnDemo} />
         {mobile ? <AliasMenuMobile /> : null}
         {this.props.sidePanelSection ? <SidePanel /> : null}
         {this.props.displayQR ? <QRDisplay /> : null}
