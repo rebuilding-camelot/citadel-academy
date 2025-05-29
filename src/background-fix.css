@@ -1,0 +1,230 @@
+/* Background fix for Citadel Academy */
+
+/* Reset all backgrounds to light purple */
+html, 
+body, 
+#root, 
+#app-container,
+.ui-container,
+.ui-segment,
+.ui-card,
+.ui-modal,
+.ui-dimmer,
+.ui-menu,
+.ui-dropdown,
+.ui-popup,
+.ui-sidebar,
+.ui-accordion,
+.ui-tab,
+.ui-form,
+.ui-input,
+.ui-message,
+.ui-table,
+.ui-list,
+.ui-item,
+.ui-grid,
+.ui-column,
+.ui-row,
+.ui-header,
+.ui-divider,
+.ui-placeholder,
+.ui-loader,
+.ui-progress,
+.ui-statistic,
+.ui-feed,
+.ui-comment,
+.ui-comments,
+.ui-rating,
+.ui-search,
+.ui-sticky,
+.ui-rail,
+.ui-step,
+.ui-steps,
+.ui-breadcrumb,
+.ui-pagination,
+.ui-advertisement,
+.card,
+.container,
+.segment,
+.modal,
+.dimmer,
+.menu,
+.dropdown,
+.popup,
+.sidebar,
+.accordion,
+.tab,
+.form,
+.input,
+.message,
+.table,
+.list,
+.item,
+.grid,
+.column,
+.row,
+.header,
+.divider,
+.placeholder,
+.loader,
+.progress,
+.statistic,
+.feed,
+.comment,
+.comments,
+.rating,
+.search,
+.sticky,
+.rail,
+.step,
+.steps,
+.breadcrumb,
+.pagination,
+.advertisement,
+div[class*="Paper"],
+div[class*="Card"],
+div[class*="AppBar"],
+div[class*="Toolbar"],
+div[class*="Drawer"],
+div[class*="Dialog"],
+div[class*="Popover"],
+div[class*="Menu"],
+div[class*="List"],
+div[class*="ListItem"],
+div[class*="Table"],
+div[class*="TableRow"],
+div[class*="TableCell"],
+div[class*="TableHead"],
+div[class*="TableBody"],
+div[class*="TableFooter"],
+div[class*="Accordion"],
+div[class*="Tab"],
+div[class*="Tabs"],
+div[class*="FormControl"],
+div[class*="FormLabel"],
+div[class*="FormHelperText"],
+div[class*="InputLabel"],
+div[class*="InputBase"],
+div[class*="Select"],
+div[class*="MenuItem"],
+div[class*="Checkbox"],
+div[class*="Radio"],
+div[class*="Switch"],
+div[class*="Slider"],
+div[class*="Progress"],
+div[class*="CircularProgress"],
+div[class*="LinearProgress"],
+div[class*="Alert"],
+div[class*="Snackbar"],
+div[class*="Badge"],
+div[class*="Avatar"],
+div[class*="Chip"],
+div[class*="Divider"],
+div[class*="Grid"],
+div[class*="Container"],
+div[class*="Box"],
+div[class*="Typography"],
+div[class*="Link"],
+div[class*="Breadcrumbs"],
+div[class*="Stepper"],
+div[class*="Step"],
+div[class*="StepLabel"],
+div[class*="StepContent"],
+div[class*="StepIcon"],
+div[class*="StepConnector"],
+div[class*="Tooltip"],
+div[class*="Backdrop"],
+div[class*="Modal"],
+div[class*="Popover"],
+div[class*="Popper"],
+div[class*="ClickAwayListener"],
+div[class*="Collapse"],
+div[class*="Fade"],
+div[class*="Grow"],
+div[class*="Slide"],
+div[class*="Zoom"] {
+  background-color: #e6e6fa !important;
+  background-image: none !important;
+}
+
+/* Exceptions for elements that should keep their original background */
+#main_nav {
+  background-color: #2a0066 !important;
+  color: white !important;
+  border-bottom: 1px solid #ffa500 !important;
+}
+
+button,
+.ui.button,
+.button {
+  background-color: #ffa500 !important;
+  color: white !important;
+}
+
+/* Force text color */
+body,
+#root,
+.text,
+.content,
+.description,
+.header,
+.title,
+.meta,
+.extra,
+.item,
+.menu .item,
+.dropdown .item,
+.list .item,
+.card .content,
+.card .header,
+.card .meta,
+.card .description,
+.card .extra,
+h1, h2, h3, h4, h5, h6,
+p, span, div, a {
+  color: white !important;
+}
+
+/* Exceptions for text that should be white */
+#main_nav,
+#main_nav a,
+#main_nav div,
+#main_nav span,
+#main_nav button,
+button,
+.ui.button,
+.button {
+  color: white !important;
+}
+
+/* Ensure the logo text has the right color */
+#main_nav .branding span {
+  color: #330066 !important; /* Dark purple */
+}
+
+/* Add !important to all styles to ensure they override existing styles */
+* {
+  background-image: none !important;
+}
+
+/* Add specific overrides for any problematic elements */
+.ui.segment, 
+.ui.segments, 
+.ui.card, 
+.ui.cards, 
+.ui.modal, 
+.ui.modals {
+  background-color: #e6e6fa !important;
+  border-color: #0053a0 !important;
+}
+
+/* Override any white backgrounds */
+[style*="background-color: white"],
+[style*="background-color: #fff"],
+[style*="background-color: #ffffff"],
+[style*="background: white"],
+[style*="background: #fff"],
+[style*="background: #ffffff"] {
+  background-color: #e6e6fa !important;
+  background: #e6e6fa !important;
+}

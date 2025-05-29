@@ -8,6 +8,10 @@ import * as ReactDOMClient from 'react-dom/client';
 import store, { history } from './store';
 import App from './App'
 import './index.css'
+import './background-fix.css'
+import './citadel-theme.css'
+import './white-text-theme.css'
+import './branding.css'
 
 const Store = store();
 

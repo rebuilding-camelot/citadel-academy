@@ -13,8 +13,8 @@ body {
 }
 
 #main_nav {
-  background-color: var(--citadel-blue) !important;
-  border-bottom: 1px solid var(--citadel-blue) !important;
+  background-color: var(--citadel-dark-purple) !important;
+  border-bottom: 1px solid var(--citadel-gold) !important;
 }
 
 #main_nav a, 
@@ -27,7 +27,7 @@ body {
 .branding img, 
 .nav-logo, 
 #main_nav img {
-  height: 40px !important;
+  height: 48px !important;
   margin-top: -8px !important;
 }
 
@@ -40,18 +40,19 @@ button,
 
 /* Make text visible on light purple background */
 .text-content {
-  color: var(--citadel-text) !important;
+  color: white !important;
 }
 
 /* Improve visibility of menu items */
 .menu-item, 
 .action-item {
-  color: var(--citadel-text) !important;
+  color: white !important;
   font-weight: bold !important;
 }
 
 /* Add hover effects */
 .menu-item:hover, 
 .action-item:hover {
-  background-color: rgba(0, 83, 159, 0.1) !important;
+  background-color: rgba(0, 83, 159, 0.5) !important;
+  color: white !important;
 }

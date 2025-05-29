@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 240 67% 94%;
     --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
+    --card: 240 67% 94%;
     --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
+    --popover: 240 67% 94%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
@@ -24,6 +24,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    
+    /* Citadel Academy Theme Variables */
+    --citadel-blue: #0053a0;
+    --citadel-light-purple: #e6e6fa;
+    --citadel-text: #ffffff;
+    --citadel-white: #ffffff;
   }
  
   .dark {
@@ -77,15 +83,23 @@
 }
 body {
   font-family: 'Lexend-Deca-Regular';
-  background: rgb(230, 230, 250); /* Light purple background */
-  color: rgb(50, 50, 50);
+  background: var(--citadel-light-purple) !important; /* Light purple background */
+  background-color: var(--citadel-light-purple) !important;
+  background-image: none !important;
+  color: white !important;
   margin: 0;
   -webkit-overflow-scrolling: touch;
 }
 
+html {
+  background: var(--citadel-light-purple) !important;
+  background-color: var(--citadel-light-purple) !important;
+  background-image: none !important;
+}
+
 /* Citadel Academy specific styles */
 #main_nav {
-  background-color: #0053a0 !important; /* Citadel Blue */
+  background-color: var(--citadel-blue) !important; /* Citadel Blue */
   color: white !important;
 }
 
@@ -104,9 +118,16 @@ button, .ui.button {
   color: #333 !important;
 }
 
+/* Ensure all cards and containers have the correct background */
+.card, .container, .ui.card, .ui.segment, .ui.modal {
+  background-color: var(--citadel-light-purple) !important;
+  border-color: var(--citadel-blue) !important;
+}
+
 .branding img, .nav-logo, #main_nav img {
-  height: 36px !important;
+  height: 48px !important;
   margin-top: -6px !important;
+  background-color: transparent !important;
 }
 code {
   background: rgb(47, 54, 61, 0.75);

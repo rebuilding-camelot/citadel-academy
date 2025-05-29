@@ -1,0 +1,50 @@
+/* Citadel Academy Branding Styles */
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+/* Academy title styling */
+.academy-title {
+  font-family: 'Lexend-Deca-Regular', sans-serif !important;
+  font-size: 2rem !important;
+  color: #8B5CF6 !important; /* Nostr purple */
+  letter-spacing: 0.05em !important;
+  text-shadow: 2px 2px 4px rgba(139, 92, 246, 0.3) !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  padding: 0 !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+}
+
+/* Academy tagline styling */
+.academy-tagline {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.9rem !important;
+  color: #F59E0B !important; /* Nostr gold */
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Branding container */
+.branding-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  gap: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .academy-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .academy-tagline {
+    font-size: 0.6rem !important;
+  }
+}

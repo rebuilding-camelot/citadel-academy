@@ -95,15 +95,19 @@ class Nav extends Component {
 				style={styles.branding}
 				onClick={() => { this.props.setDirectoryLayoutExpanded(true); }}
 			>
-				<Link to='/'>
+				<Link to='/' style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
 					<img
 						onClick={this.props._showLandingPage ? () => { this.props.showLandingPage(false); } : null}
 						src={logo}
-						height={36}
+						height={48}
 						style={{ marginTop: -6 }}
 						alt="Citadel Academy Logo"
 						className="nav-logo"
 					/>
+					<div className="branding-container">
+						<h1 className="academy-title">Citadel Academy</h1>
+						<p className="academy-tagline">Where Families Forge Their Dynastic Legacies</p>
+					</div>
 				</Link>
 			</div>
 		);
@@ -462,7 +466,7 @@ const styles = {
 			position: 'absolute',
 			top: 0,
 			left: 0,
-			backgroundColor: '#0053a0', /* Citadel Blue */
+			backgroundColor: 'var(--citadel-blue)', /* Citadel Blue */
 			borderBottom: `1px solid ${COLORS.secondary}`,
 			pointerEvents: mobileEditor.open ? 'none' : 'auto',
       opacity: mobileEditor.open ? 0 : 1
@@ -533,7 +537,9 @@ const styles = {
 	branding: {
 		userSelect: 'none',
 		marginTop: 6,
-		float: 'left'
+		float: 'left',
+		display: 'flex',
+		alignItems: 'center'
 	},
 
 	notifications: {
