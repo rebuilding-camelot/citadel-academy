@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
+import './citadel-theme.css';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
