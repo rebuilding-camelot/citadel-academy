@@ -6,7 +6,7 @@ A Nostr-native educational ecosystem empowering families to own their learning j
 > *"The best time to plant a tree was 20 years ago. The second best time is now."*  
 > – Chinese Proverb
 
-## We're providing the opportunity for you to plant your 'tree of knowledge' now!
+## Providing the opportunity for you to plant your 'Tree of Knowledge' now!
 
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple)](https://nostr.com)
 [![Powered by Bitcoin](https://img.shields.io/badge/Powered%20by-Bitcoin-orange)](https://bitcoin.org)
