@@ -6,6 +6,8 @@ A Nostr-native educational ecosystem empowering families to own their learning j
 > *"The best time to plant a tree was 20 years ago. The second best time is now."*  
 > – Chinese Proverb
 
+## We're providing the opportunity for you to plant your 'tree of knowledge' now!
+
 [![Built with Nostr](https://img.shields.io/badge/Built%20with-Nostr-purple)](https://nostr.com)
 [![Powered by Bitcoin](https://img.shields.io/badge/Powered%20by-Bitcoin-orange)](https://bitcoin.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -46,9 +48,10 @@ Citadel Academy transforms education from institutional control to family sovere
 - **Family Vaults** - Encrypted knowledge preservation
 
 ### Payment & Automation
-- **Lightning Network** - Instant micropayments for courses
+- **Lightning Network** - Instant micropayments for courses and between peers
 - **Fedimint** - Family treasury management
 - **zap.stream** - Live classroom integration
+- **vida.live** - AI integrated voice tutors and fiat on-ramp
 
 ---
 
@@ -103,7 +106,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 🌟 Community
 
-- **Nostr**: Follow us at `npub1citadel...`
+- **Nostr**: Follow us at the Rebuilding Camelot account `nsec1ta7e84kz65k8r797hhmkucgqesgsw43f4ydpfv4sufduzm3k56fqdslpjh`
 - **Telegram**: [Rebuilding Camelot](https://t.me/rebuildingcamelot)
 - **GitHub Discussions**: Share ideas and get help
 - **Lightning**: Support development at `academy@satnam.pub`
@@ -129,8 +132,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 > *"Education is the most powerful weapon which you can use to change the world."*  
 > – Nelson Mandela
 
-**Together, we're not just building an academy—we're rebuilding Camelot, one family at a time.**
+**Together, we're not just building an academy; We're rebuilding Camelot, one family at a time.**
 
 ---
 
-*Built with ❤️ by the Rebuilding Camelot community*
+*Built with ❤️ by the Rebuilding Camelot initiative*
