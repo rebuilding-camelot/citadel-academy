@@ -119,7 +119,7 @@ class Post extends PureComponent {
 							fontSize: mobile ? 12 : 13,
 							display: 'flex',
 							alignItems: 'center',
-							color: zapTotal ? COLORS.satelliteGold : COLORS.secondaryBright,
+							color: zapTotal ? COLORS.citadelBlue : COLORS.secondaryBright,
 							fontWeight: 'bold',
 							whiteSpace: 'nowrap'
 						}}

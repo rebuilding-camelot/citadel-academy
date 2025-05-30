@@ -1,10 +1,10 @@
-# Satellite CDN - Scalable Media Hosting for the Nostr Ecosystem
+# Citadel Academy CDN - Scalable Media Hosting for the Nostr Ecosystem
 
 This service could be used by any nostr application to allow users to upload and serve files (including large files) from a fast content delivery network.
 
-Satellite CDN is a paid service. Storage is "pay as you go" at a flat rate of USD $0.05 / GB / month, payable in sats via lightning at the current USD/BTC exchange rate. **Data transfer is free and unlimited.** This pricing structure is a good fit for social applications because users will not be charged extra if their content becomes popular. For example, if a nostr user uploads a 1 GB podcast to the CDN which goes viral and gets downloaded a million times, the user will still only pay a predictable rate of USD $0.05 per month.
+Citadel Academy CDN is a paid service. Storage is "pay as you go" at a flat rate of USD $0.05 / GB / month, payable in sats via lightning at the current USD/BTC exchange rate. **Data transfer is free and unlimited.** This pricing structure is a good fit for social applications because users will not be charged extra if their content becomes popular. For example, if a nostr user uploads a 1 GB podcast to the CDN which goes viral and gets downloaded a million times, the user will still only pay a predictable rate of USD $0.05 per month.
 
-For each file added to the CDN, Satellite computes the relevant [NIP-94](https://github.com/nostr-protocol/nips/blob/master/94.md) parameters and returns them to the client upon completion of the upload. The client may then verify these values and/or use them to create a kind `1063` event.
+For each file added to the CDN, Citadel Academy computes the relevant [NIP-94](https://github.com/nostr-protocol/nips/blob/master/94.md) parameters and returns them to the client upon completion of the upload. The client may then verify these values and/or use them to create a kind `1063` event.
 
 
 ## Example
@@ -30,7 +30,7 @@ const requestCredit = await window.nostr.signEvent({
 // as the uri encoded auth param. The API responds with
 // a json object which includes an offer to purchase the
 // requested storage and expected terms of payment.
-const service = await fetch(`https://api.satellite.earth/v1/media/account/credit?auth=${encodeURIComponent(JSON.stringify(requestCredit))}`);
+const service = await fetch(`https://api.citadelacademy.org/v1/media/account/credit?auth=${encodeURIComponent(JSON.stringify(requestCredit))}`);
 
 // Prompt user to sign the returned payment event
 const payment = await window.nostr.signEvent(service.payment);
@@ -62,7 +62,7 @@ const requestAccount = await window.nostr.signEvent({
 });
 
 // Fetch user's account info
-const account = await fetch(`https://api.satellite.earth/v1/media/account?auth=${encodeURIComponent(JSON.stringify(requestAccount))}`);
+const account = await fetch(`https://api.citadelacademy.org/v1/media/account?auth=${encodeURIComponent(JSON.stringify(requestAccount))}`);
 
 // Check if storage was allocated
 if (account.creditTotal > 0) {
@@ -91,7 +91,7 @@ const uploadAuth = await window.nostr.signEvent({
 
 // Prompt user to select a file to upload and
 // send it as the body of a PUT request 
-const response = await fetch(`https://api.satellite.earth/v1/media/item?auth=${encodeURIComponent(JSON.stringify(uploadAuth))}`, {
+const response = await fetch(`https://api.citadelacademy.org/v1/media/item?auth=${encodeURIComponent(JSON.stringify(uploadAuth))}`, {
   method: 'PUT',
   body: file
 });
@@ -100,7 +100,7 @@ const response = await fetch(`https://api.satellite.earth/v1/media/item?auth=${e
 //     "created": 1685997838,
 //     "sha256": "60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274",
 //     "name": "Space Odyssey Theme.mp4",
-//     "url": "https://cdn.satellite.earth/60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274.mp4",
+//     "url": "https://cdn.citadelacademy.org/60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274.mp4",
 //     "infohash": "a233527c1dc9380f8aec6c23b0db4044c75ae39a",
 //     "magnet": "magnet:?xt=urn:btih:a233527c1dc9380f8aec6c23b0db4044c75ae39a&dn=Space+Odyssey+Theme.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com",
 //     "size": 4842030,
@@ -109,7 +109,7 @@ const response = await fetch(`https://api.satellite.earth/v1/media/item?auth=${e
 //         [ "x", "60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274" ],
 //         [ "m", "video/mp4" ],
 //         [ "i", "a233527c1dc9380f8aec6c23b0db4044c75ae39a" ],
-//         [ "url", "https://cdn.satellite.earth/60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274.mp4" ],
+//         [ "url", "https://cdn.citadelacademy.org/60bb967f08cb8721def12810243673bcb4b046e0733ec901be2e3ffd904ed274.mp4" ],
 //         [ "name", "Space Odyssey Theme.mp4" ],
 //         [ "size", "4842030" ],
 //         [ "magnet", "magnet:?xt=urn:btih:a233527c1dc9380f8aec6c23b0db4044c75ae39a&dn=Space+Odyssey+Theme.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com" ]
@@ -122,7 +122,7 @@ When the upload completes successfully, the API returns a reponse with the file 
 
 ## API
 
-All routes listed below are relative to the endpoint `https://api.satellite.earth/v1/media`. 
+All routes listed below are relative to the endpoint `https://api.citadelacademy.org/v1/media`. 
 
 Note that for all requests that require an `auth` param, the request may be fail with a `403` response if the `created_at` field of the kind `22242` event deviates too far from the time of the request according to the server.
 

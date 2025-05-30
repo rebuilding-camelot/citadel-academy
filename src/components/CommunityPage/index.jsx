@@ -515,7 +515,7 @@ class CommunityPage extends Component {
 								npub={this.props.ownernpub}
 								profile={this.state.metadata[this.props.ownerpubkey] ? (this.state.metadata[this.props.ownerpubkey].profile) || {} : {}}
 								style={{
-									color: COLORS.satelliteGold
+									color: COLORS.citadelBlue
 								}}
 							/>
 						</Link>

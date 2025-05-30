@@ -7,6 +7,7 @@ import { nip19 } from 'nostr-tools';
 import AliasMenu from './AliasMenu';
 import PrettySVG from '../common/PrettySVG';
 import Image from '../Nostr/Image';
+import { PrimaryNavLinks, SecondaryNavLinks } from './NavigationLinks';
 
 import logo from '../../assets/citadel-logo.png';
 import svgfrontpage from '../../assets/frontpage.svg';
@@ -423,9 +424,40 @@ class Nav extends Component {
 	};
 
 	render = () => {
+		const { mobile, route } = this.props;
+		const activeRoute = route ? route.split('/')[1] : '';
+		
 		return (
 			<div id='main_nav' style={styles.container(this.props)}>
 				{this.renderBranding()}
+				
+				{/* Only show navigation links if user is authenticated or it's not a sign-in/sign-up page */}
+				{(this.props.pubkey || (route !== '/auth' && route !== '/register')) && (
+					<div style={{ 
+						display: 'flex', 
+						alignItems: 'center',
+						marginLeft: mobile ? 10 : 30,
+						height: '100%'
+					}}>
+						<PrimaryNavLinks 
+							mobile={mobile} 
+							activeRoute={activeRoute}
+							onHover={(hover) => this.setState({ hover })}
+							hoverState={this.state.hover}
+						/>
+					</div>
+				)}
+				
+				{/* Secondary navigation (About, Support) */}
+				{!mobile && (this.props.pubkey || (route !== '/auth' && route !== '/register')) && (
+					<SecondaryNavLinks 
+						mobile={mobile}
+						activeRoute={activeRoute}
+						onHover={(hover) => this.setState({ hover })}
+						hoverState={this.state.hover}
+					/>
+				)}
+				
 				{this.renderAnonUserActions()}
 				{this.renderNostrAuthenticated()}
 				{this.props._hoverAliasMenu ? <AliasMenu pubkey={this.props.pubkey} profile={this.props.profile} /> : null}

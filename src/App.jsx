@@ -34,24 +34,22 @@ import MobileNav from './components/MobileNav';
 import Nav from './components/Nav';
 import CourseViewerPage from './components/CourseViewerPage';
 import DashboardPage from './components/DashboardPage';
+import AboutPage from './components/AboutPage';
+import SupportPage from './components/SupportPage';
+import Footer from './components/Footer';
 
 
 class App extends Component {
-
   componentDidMount = async () => {
-
     this.props.initialize(this.props.store);
-
     window.addEventListener('resize', this.onWindowResize);
   };
 
   componentWillUnmount = () => {
-
     window.removeEventListener('resize', this.onWindowResize);
   };
 
   onWindowResize = () => {
-
     this.props.windowResize();
   };
 
@@ -117,18 +115,24 @@ class App extends Component {
     }
 
     return (
-      <div style={{
+      <div id="app-container" style={{
         WebkitFontSmoothing: 'antialiased',
         MozOsxFontSmoothing: 'grayscale',
-        minHeight,
-        backgroundColor: COLORS.lightPurple,
-        color: '#000'
+        backgroundColor: 'var(--citadel-light-purple)',
+        color: 'var(--citadel-text)',
+        backgroundImage: 'none',
+        background: 'var(--citadel-light-purple)',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        position: 'relative'
       }}>
         {mobile ? null : <div id='media_graph' style={{ zIndex: 1, position: 'absolute', left: '50%', transform: `translate(-50%, ${NAV_HEIGHT * -1}px)`, visibility: 'hidden' }} />}
         {this.props.zapRequest ? <ZapRequest /> : null}
         <Switch>
           <Route path='/' component={Nav} />
         </Switch>
+        
         <div style={{
           paddingTop: NAV_HEIGHT,
           pointerEvents: this.props.mobileEditor.open ? 'none' : 'auto',
@@ -151,11 +155,23 @@ class App extends Component {
         </div>
         <Route exact path='/courses' component={CourseViewerPage} />
         <Route exact path='/dashboard' component={DashboardPage} />
+        <Route exact path='/dashboard/courses' component={DashboardPage} />
+        <Route exact path='/dashboard/family-progress' component={DashboardPage} />
+        <Route exact path='/dashboard/achievements' component={DashboardPage} />
+        <Route exact path='/dashboard/wallet' component={DashboardPage} />
+        <Route exact path='/dashboard/settings' component={DashboardPage} />
+        <Route exact path='/dashboard/add-family' component={DashboardPage} />
+        <Route exact path='/dashboard/create-course' component={DashboardPage} />
         <Route exact path='/cdn' component={MediaHosting} />
         <Route exact path='/verify' component={ComingSoon} />
         <Route exact path='/theory' component={ComingSoon} />
         <Route exact path='/ln' component={ComingSoon} />
         <Route exact path='/ui' component={ShadcnDemo} />
+        <Route exact path='/about' component={AboutPage} />
+        <Route exact path='/support' component={SupportPage} />
+        <Route exact path='/privacy' component={AboutPage} />
+        <Route exact path='/terms' component={AboutPage} />
+        <Route exact path='/contact' component={SupportPage} />
         {mobile ? <AliasMenuMobile /> : null}
         {this.props.sidePanelSection ? <SidePanel /> : null}
         {this.props.displayQR ? <QRDisplay /> : null}
@@ -172,6 +188,7 @@ class App extends Component {
         />
         <NewPostModal />
         {mobile ? <MobileNav /> : null}
+        <Footer />
       </div>
     );
   };

@@ -236,9 +236,7 @@ class DirectoryPage extends Component {
 					<TopLevelLinks />
 				</div>
 				<div id='dir_col_2' className='no-scroll' style={{ ...styles.col2(dirExpanded, height, this.state.listVisible, contentWidth), scrollbarWidth: 'none' }}>
-					{this.col2 ? <FrontPageFeed overflowContainer={this.col2} parentWidth={this.col2.contentWidth} visible onSelect={this.handleSelectPubItem} /> : null}
-					{/*{this.col2 && mode === 'following' ? <FrontPageFeed overflowContainer={this.col2} parentWidth={this.col2.contentWidth} visible onSelect={this.handleSelectPubItem} /> : null}*/}
-					{/*{this.col2 && mode === 'featured' ? <CommunityList overflowContainer={this.col2} parentWidth={this.col2.contentWidth} visible /> : null}*/}
+					{/* FrontPageFeed removed as it's not intended for this application */}
 				</div>
 				<div id='dir_col_3' style={styles.col3(dirExpanded, height, awaitingData, contentWidth, clientWidth)}>
 					{this.props.main ? (<Route exact path='/' render={(props) => <CommunitiesFeed overflowContainer={this.col3} />} />) : null}
@@ -321,17 +319,20 @@ const styles = {
 	col3: (expanded, height, awaitingData, contentWidth, clientWidth) => {
 
 		const mod = (clientWidth > contentWidth ? ((clientWidth - contentWidth) / 2) : 0);
-
+		
+		// For the home page route, we want to use the full width
+		const isHomePage = window.location.pathname === '/';
+		
 		const props = {
 			height,
 			position: 'absolute',
 			overflowY: 'scroll',
 			flex: 'none',
 			...transition(0.2, 'ease', [ 'left', 'padding', 'width' ]),
-			left: !expanded ? 0 : (contentWidth * 0.5) + mod,
-			width: !expanded ? contentWidth + (2 * mod) : (contentWidth * 0.5) + mod,
-			paddingLeft: !expanded ? (contentWidth * 0.25) + mod : 0,
-			paddingRight: !expanded ? (contentWidth * 0.25) + mod : 0 + mod,
+			left: isHomePage ? 0 : (!expanded ? 0 : (contentWidth * 0.5) + mod),
+			width: isHomePage ? '100%' : (!expanded ? contentWidth + (2 * mod) : (contentWidth * 0.5) + mod),
+			paddingLeft: isHomePage ? 0 : (!expanded ? (contentWidth * 0.25) + mod : 0),
+			paddingRight: isHomePage ? 0 : (!expanded ? (contentWidth * 0.25) + mod : 0 + mod),
 		};
 
 		return props;

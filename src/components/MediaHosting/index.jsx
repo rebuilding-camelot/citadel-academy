@@ -142,7 +142,7 @@ class MediaHosting extends Component {
 					} : {})
 				}}>
 					<div style={{
-						color: COLORS.satelliteGold,
+						color: COLORS.citadelBlue,
 						fontFamily: 'JetBrains-Mono-Bold',
 						marginLeft: 2,
 						display: 'flex',

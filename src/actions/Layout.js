@@ -35,6 +35,13 @@ export const viewSidePanel = (topMode, subMode) => {
 	};
 };
 
+// Make viewSidePanel available globally for components that don't have direct access to Redux
+window.viewSidePanel = (topMode, subMode) => {
+	if (window.store) {
+		window.store.dispatch(viewSidePanel(topMode, subMode));
+	}
+};
+
 export const DISPLAY_QR = 'DISPLAY_QR';
 export const displayQR = (value) => {
 	return { type: DISPLAY_QR, data: { value } };

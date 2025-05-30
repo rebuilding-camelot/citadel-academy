@@ -273,26 +273,7 @@ class PublicationsNav extends Component {
 						NETWORK:
 					</span>
 				</div>)}
-				<div
-					onClick={() => this.props.setFrontpageMode('featured')}
-					style={navStyle({
-						active: this.props.mode === 'featured'
-					})}
-				>
-					Featured
-				</div>
-				<div style={{
-					marginLeft: this.props.mobile ? 12 : 8,
-					marginRight: this.props.mobile ? 12 : 8,
-				}} />
-				<div
-					onClick={() => this.props.setFrontpageMode('following')}
-					style={navStyle({
-						active: this.props.mode === 'following'
-					})}
-				>
-					Following
-				</div>
+				{/* Featured and Following feeds removed as they're not intended for this application */}
 				{/*{this.renderActions()}*/}
 {/*				{this.renderSearch()}
 				<div style={styles.divider} />*/}

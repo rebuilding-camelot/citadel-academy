@@ -129,7 +129,7 @@ class Slider extends PureComponent {
 				onClick={({ clientX }) => this.handleMove(clientX, true)}
 			>
 				<div
-					style={styles.range(Math.ceil(width), 0, COLORS.satelliteGold, active)}
+					style={styles.range(Math.ceil(width), 0, COLORS.citadelBlue, active)}
 					{ ...fhover }
 				/>
 				<div
@@ -175,7 +175,7 @@ const styles = {
 			cursor: 'pointer',
 			height: 18,
 			width: 18,
-			background: /*COLORS.satelliteGold*/'#fff',
+			background: /*COLORS.citadelBlue*/'#fff',
 			opacity: active ? 1 : 0.9,
 			transform: `translate(${x}px)`,
 			border: '1px solid rgb(18, 18, 18)',

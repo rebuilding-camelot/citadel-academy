@@ -12,6 +12,7 @@ import Relays from './Relays';
 import Media from './Media';
 import Communities from './Communities';
 import Notifications from './Notifications';
+import Legal from './Legal';
 import MediaTitleStats from './Media/TitleStats';
 
 import { revokeDeviceAuth, showAliasMenuMobile, viewSidePanel, setMobileMenuOpen } from '../../actions';
@@ -169,6 +170,8 @@ class SidePanel extends Component {
 			return <Communities />
 		} else if (topMode === 'notifications') {
 			return <Notifications />
+		} else if (topMode === 'legal') {
+			return <Legal />
 		}
 
 		return null;

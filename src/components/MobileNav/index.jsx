@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { setMobileNavMode, navigate, viewSidePanel, showAliasMenuMobile, loadActiveNostr, setLocalPublicKey } from '../../actions';
 import { COLORS } from '../../constants';
@@ -52,6 +53,21 @@ class MobileNav extends Component {
 			//window.history.back();
 			this.props.navigate('/');
 
+		} else if (selected === 'learn') {
+			
+			this.props.navigate('/courses');
+			
+		} else if (selected === 'dashboard') {
+			
+			if (!this.props.pubkey) {
+				connected = await this.handleAuthActionFallback();
+				if (!connected) {
+					return;
+				}
+			}
+			
+			this.props.navigate('/dashboard');
+			
 		} else if (selected === 'conversations') {
 
 			if (!this.props.pubkey) {
@@ -120,72 +136,87 @@ class MobileNav extends Component {
 					justifyContent: 'space-evenly',
 					WebkitBackdropFilter: 'blur(12px)',
 					backdropFilter: 'blur(12px)',
-					background: 'rgba(23, 24, 25, 0.80)'
+					background: '#2a0066', /* Changed to dark purple to match header */
+					color: 'white !important'
 				}}
 			>
 				<div
 					onClick={() => this.handleMenuSelect('home')}
+					style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
 				>
 					<Icon
-						name={route === '/' && mobileNavMode === 'network' ? 'moon' : 'moon outline'}
+						name={route === '/' && mobileNavMode === 'network' ? 'home' : 'home'}
 						style={{
 							marginRight: 0,
-							fontSize: 20
+							fontSize: 20,
+							color: route === '/' ? '#ffa500' : '#fff'
 						}}
 					/>
-{/*					<img
-						src={svgsatellite}
-						style={{
-							height: 20,
-							width: 20,
-							marginTop: 2
-						}}
-					/>*/}
+					<span style={{ fontSize: 10, marginTop: 2, color: route === '/' ? '#ffa500' : '#fff' }}>Home</span>
 				</div>
+				
+				<div
+					onClick={() => this.handleMenuSelect('learn')}
+					style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+				>
+					<Icon
+						name='book'
+						style={{
+							marginRight: 0,
+							fontSize: 20,
+							color: route === '/courses' ? '#ffa500' : '#fff'
+						}}
+					/>
+					<span style={{ fontSize: 10, marginTop: 2, color: route === '/courses' ? '#ffa500' : '#fff' }}>Learn</span>
+				</div>
+				
+				<div
+					onClick={() => this.handleMenuSelect('dashboard')}
+					style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+				>
+					<Icon
+						name='user'
+						style={{
+							marginRight: 0,
+							fontSize: 20,
+							color: route === '/dashboard' ? '#ffa500' : '#fff'
+						}}
+					/>
+					<span style={{ fontSize: 10, marginTop: 2, color: route === '/dashboard' ? '#ffa500' : '#fff' }}>My Academy</span>
+				</div>
+				
 				<div
 					onClick={() => this.handleMenuSelect('communities')}
-				>
-					<img
-						src={route === '/' && mobileNavMode === 'communities' ? svgcommunities : svgcommunitiesoutline}
-						style={{
-							height: 20,
-							width: 20,
-							marginTop: 2
-						}}
-					/>
-				</div>
-				<div
-					onClick={() => this.handleMenuSelect('conversations')}
+					style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
 				>
 					<Icon
-						name='comments outline'
+						name='users'
 						style={{
 							marginRight: 0,
-							fontSize: 20
+							fontSize: 20,
+							color: (route === '/' && mobileNavMode === 'communities') ? '#ffa500' : '#fff'
 						}}
 					/>
+					<span style={{ 
+						fontSize: 10, 
+						marginTop: 2, 
+						color: (route === '/' && mobileNavMode === 'communities') ? '#ffa500' : '#fff' 
+					}}>Communities</span>
 				</div>
-				<div
-					onClick={() => this.handleMenuSelect('messages')}
-				>
-					<Icon
-						name='envelope outline'
-						style={{
-							marginRight: 0,
-							fontSize: 20
-						}}
-					/>
-				</div>
+				
 				<div
 					onClick={() => this.handleMenuSelect('menu')}
+					style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
 				>
 					<Icon
-						name='sidebar'
+						name='bars'
 						style={{
 							marginRight: 0,
-							fontSize: 20
+							fontSize: 20,
+							color: '#fff'
 						}}
 					/>
+					<span style={{ fontSize: 10, marginTop: 2, color: '#fff' }}>Menu</span>
 				</div>
 			</div>
 		);

@@ -237,7 +237,7 @@ const styles = {
 	},
 
 	label: {
-		color: COLORS.satelliteGold,
+		color: COLORS.citadelBlue,
 		marginRight: 12,
 		userSelect: 'none'
 	},

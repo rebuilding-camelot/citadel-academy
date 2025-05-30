@@ -1,0 +1,86 @@
+/* White Text Theme for Citadel Academy */
+
+/* Global text color override */
+body, 
+#root, 
+div, 
+p, 
+span, 
+h1, h2, h3, h4, h5, h6, 
+a, 
+button, 
+input, 
+textarea, 
+select, 
+option,
+.text,
+.content,
+.description,
+.header,
+.title,
+.meta,
+.extra,
+.item,
+.menu .item,
+.dropdown .item,
+.list .item,
+.card .content,
+.card .header,
+.card .meta,
+.card .description,
+.card .extra {
+  color: white !important;
+}
+
+/* Exceptions for elements that should keep their original color */
+#main_nav .branding span {
+  color: #330066 !important; /* Dark purple */
+}
+
+/* Menu and feed button hover effects */
+.menu-item:hover, 
+.action-item:hover,
+.ui.menu .item:hover,
+.ui.dropdown .item:hover,
+.ui.list .item:hover,
+button:hover,
+.ui.button:hover,
+a:hover {
+  background-color: rgba(0, 83, 159, 0.5) !important;
+  color: white !important;
+}
+
+/* Mobile navigation */
+.mobile-nav-icon {
+  color: white !important;
+}
+
+/* Icon colors */
+.icon, i {
+  color: white !important;
+}
+
+/* Ensure all icons in the mobile navigation are white */
+#mobile-nav .icon,
+#mobile-nav i,
+#mobile-nav img {
+  color: white !important;
+  filter: brightness(0) invert(1);
+}
+
+/* Override any dark text on hover */
+*:hover {
+  color: white !important;
+}
+
+/* Exceptions for buttons and navigation */
+button, 
+.ui.button, 
+.button,
+#main_nav,
+#main_nav a,
+#main_nav div,
+#main_nav span,
+#main_nav button {
+  color: white !important;
+}

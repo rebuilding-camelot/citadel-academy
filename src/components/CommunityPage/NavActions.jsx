@@ -172,14 +172,14 @@ class NavActions extends PureComponent {
 						onMouseOut={() => this.setState({ hover: '' })}
 						style={{
 							fontSize: 12,
-							color: COLORS.satelliteGold,
+							color: COLORS.citadelBlue,
 							fontFamily: 'JetBrains-Mono-Bold',
 							//marginTop: 4,
 							display: 'flex',
 							alignItems: 'center',
 							cursor: 'pointer',
 					    padding: '3px 10px',
-					    //border: `1px solid ${COLORS.satelliteGold}`,
+					    //border: `1px solid ${COLORS.citadelBlue}`,
 					    borderRadius: 5,
 					    lineHeight: '22px',
 							opacity: mobile || this.state.hover === 'newpost' ? 1 : 0.85,

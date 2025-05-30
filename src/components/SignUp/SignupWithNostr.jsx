@@ -441,7 +441,7 @@ class SignupWithNostr extends Component {
 					<div style={{ display: 'flex', marginTop: 10 }}>
 						<Button
 							onClick={this.handleUseExtension}
-							style={{ color: COLORS.satelliteGold, padding: '4px 8px', fontSize: 12, marginRight: 10 }}
+							style={{ color: COLORS.citadelBlue, padding: '4px 8px', fontSize: 12, marginRight: 10 }}
 							text='USE NOSTR EXTENSION'
 						/>
 						<Button
@@ -513,7 +513,7 @@ class SignupWithNostr extends Component {
 							{this.state.secretKey ? null : (<Button
 								onClick={this.regenerateSecretKey}
 								onMouseDown={() => this.setState({ secretKey: '', pendingSecretKeyGen: true })}
-								style={{ padding: '2px 6px', fontSize: 11, color: COLORS.satelliteGold }}
+								style={{ padding: '2px 6px', fontSize: 11, color: COLORS.citadelBlue }}
 								text='GENERATE NEW'
 								icon='refresh'
 							/>)}
@@ -601,7 +601,7 @@ class SignupWithNostr extends Component {
 
 			errorTitle = 'Request Error'
 			message = <span>Something went wrong - please check your Internet connection.</span>;
-			iconColor = COLORS.satelliteGold;
+			iconColor = COLORS.citadelBlue;
 			icon = 'warning sign';
 		}
 
@@ -736,7 +736,7 @@ class SignupWithNostr extends Component {
 						disabled={this.confirmErrorStatus()}
 						text={this.state.useExtension ? 'CONNECT NOSTR' : 'CREATE ID'}
 						width={this.state.useExtension ? 128 : 105}
-						style={{ position: 'absolute', right: 32, bottom: 32, fontSize: 12, fontFamily: 'JetBrains-Mono-Regular', lineHeight: '22px', color: COLORS.satelliteGold }}
+						style={{ position: 'absolute', right: 32, bottom: 32, fontSize: 12, fontFamily: 'JetBrains-Mono-Regular', lineHeight: '22px', color: COLORS.citadelBlue }}
 						onClick={this.handleSubmit}
 					/>
 				</div>
@@ -780,7 +780,7 @@ const styles = {
 			textAlign: 'center',
 			userSelect: 'none',
 			padding: '8px 0px 8px',
-			border: `1px solid ${COLORS.satelliteGold}`,
+			border: `1px solid ${COLORS.citadelBlue}`,
 			lineHeight: '24px',
 			fontFamily: 'JetBrains-Mono-Bold',
 			...transition(0.2, 'ease', [ 'opacity' ])

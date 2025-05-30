@@ -21,6 +21,7 @@ const INITIAL_STATE = {
 		media: 'Media CDN',
 		communities: 'Communities',
 		notifications: 'Conversations',
+		legal: 'Legal & Info',
 	},
 	subMode: {},
 	sections: [
@@ -51,6 +52,10 @@ const INITIAL_STATE = {
 		{
 			value: 'preferences',
 			icon: 'cog'
+		},
+		{
+			value: 'legal',
+			icon: 'info circle'
 		}
 	]
 };

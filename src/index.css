@@ -27,7 +27,7 @@
     
     /* Citadel Academy Theme Variables */
     --citadel-blue: #0053a0;
-    --citadel-light-purple: #e6e6fa;
+    --citadel-light-purple: #8B5CF6; /* Changed from #e6e6fa to match academy title */
     --citadel-text: #ffffff;
     --citadel-white: #ffffff;
   }

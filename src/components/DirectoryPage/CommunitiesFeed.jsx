@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import CommunityList from '../Nostr/CommunityList';
+import HomePage from '../HomePage';
 
 
 class CommunitiesFeed extends Component {
 
 	render = () => {
-
-		// console.log('navmodeprops', this.props);
-
+		// Use the new HomePage component for the main route
 		return (
 			<div
 				style={{
-					paddingLeft: 12,
-					paddingRight: 24,
-					paddingTop: 66,
-					width: (this.props.clientWidth * 0.35) + 34
+					paddingLeft: 0,
+					paddingRight: 0,
+					paddingTop: 0,
+					width: '100%'
 				}}
 			>
+				<HomePage />
+				
+				{/* Community list is now integrated into the HomePage component */}
+				{/* 
 				<CommunityList
 					overflowContainer={this.props.overflowContainer}
 					requireSubscribed={this.props.navMode === 'subscribed'}
-					// filter={this.props.navMode === 'subscribed' ? (item) => {
-					// 	return this.props.followingList[`34550:${item.event.pubkey}:${item.name}`]
-					// } : null}
 				/>
+				*/}
 			</div>
 		);
 	};
 }
 
 const mapState = ({ app, communities }) => {
-
 	return {
 		clientWidth: app.clientWidth,
 		navMode: communities.navMode,
