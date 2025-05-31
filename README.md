@@ -33,7 +33,42 @@ Citadel Academy transforms education from institutional control to family sovere
 - A Nostr identity (create one at [Satnam.pub](https://satnam.pub))
 
 ### Installation
+```bash
+# Clone the repository
+git clone https://github.com/your-username/citadel-academy.git
+
+# Navigate to the project directory
+cd citadel-academy
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 ```
+
+### Recent Improvements
+- Enhanced relay connection stability with improved error handling
+- Fixed client initialization in Redux store
+- Implemented proper parameter handling in nostrMainInit function
+- Added exponential backoff for relay reconnection attempts
+- Improved error handling in event publishing
+
+## 🔌 Implemented NIPs (Nostr Implementation Possibilities)
+
+| NIP | Description | Implementation |
+|-----|-------------|----------------|
+| [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md) | Basic protocol flow | Core client functionality |
+| [NIP-02](https://github.com/nostr-protocol/nips/blob/master/02.md) | Contact list | User following system |
+| [NIP-04](https://github.com/nostr-protocol/nips/blob/master/04.md) | Encrypted Direct Messages | Private messaging |
+| [NIP-05](https://github.com/nostr-protocol/nips/blob/master/05.md) | Mapping Nostr keys to DNS identifiers | User verification |
+| [NIP-08](https://github.com/nostr-protocol/nips/blob/master/08.md) | Handling mentions | Content formatting |
+| [NIP-10](https://github.com/nostr-protocol/nips/blob/master/10.md) | Reply threading | Discussion threads |
+| [NIP-19](https://github.com/nostr-protocol/nips/blob/master/19.md) | bech32-encoded entities | User-friendly identifiers |
+| [NIP-25](https://github.com/nostr-protocol/nips/blob/master/25.md) | Reactions | Content engagement |
+| [NIP-42](https://github.com/nostr-protocol/nips/blob/master/42.md) | Authentication | User login |
+| [NIP-57](https://github.com/nostr-protocol/nips/blob/master/57.md) | Lightning Zaps | Payments |
+| [NIP-58](https://github.com/nostr-protocol/nips/blob/master/58.md) | Badges | Educational credentials |
 
 ## 🏗️ Built With
 
@@ -89,6 +124,54 @@ Citadel Academy transforms education from institutional control to family sovere
 ## 🛠️ Development
 
 ### Project Structure
+```
+citadel-academy/
+├── public/             # Static assets
+├── src/
+│   ├── actions/        # Redux actions
+│   │   ├── Nostr.js    # Nostr-related actions
+│   │   └── ...
+│   ├── components/     # React components
+│   ├── modules/        # Core functionality modules
+│   │   ├── Client.js   # Nostr client implementation
+│   │   └── Feed.js     # Feed management
+│   ├── reducers/       # Redux reducers
+│   │   ├── nostr.js    # Nostr state management
+│   │   └── ...
+│   ├── App.jsx         # Main application component
+│   ├── constants.js    # Application constants (relays, colors, etc.)
+│   ├── main.jsx        # Application entry point
+│   └── store.js        # Redux store configuration
+└── package.json        # Project dependencies
+```
+
+### Development Commands
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Key Technical Improvements
+1. **Enhanced Relay Management**
+   - Improved connection stability with exponential backoff
+   - Better error handling for relay connections
+   - Normalized URL handling to prevent duplicate connections
+
+2. **Redux Integration**
+   - Fixed client initialization in Redux store
+   - Proper parameter handling in nostrMainInit function
+   - Improved state management for relay status
+
+3. **Error Handling**
+   - Added comprehensive error handling in event publishing
+   - Improved reconnection logic with maximum attempt limits
+   - Better logging for debugging connection issues
 
 ## 🤝 Contributing
 

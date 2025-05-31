@@ -16,7 +16,10 @@ import {
 	REVOKE_DEVICE_AUTH,
 	SET_PROFILE_PUBKEY,
 	SET_NOTIFICATIONS_LAST_SEEN,
-	RECEIVE_NOTIFICATIONS
+	RECEIVE_NOTIFICATIONS,
+	VERIFY_NIP05_REQUEST,
+	VERIFY_NIP05_SUCCESS,
+	VERIFY_NIP05_FAILURE
 } from '../actions';
 
 
@@ -38,7 +41,13 @@ const detectUnreadNotifications = (state, events) => {
 };
 
 const INITIAL_STATE = {
-	unreadNotifications: 0
+	unreadNotifications: 0,
+	nip05Verification: {
+		loading: false,
+		error: null,
+		verified: false,
+		user: null
+	}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -200,6 +209,38 @@ export default (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				profilePubkey: data.pubkey
+			};
+			
+		case VERIFY_NIP05_REQUEST:
+			return {
+				...state,
+				nip05Verification: {
+					...state.nip05Verification,
+					loading: true,
+					error: null
+				}
+			};
+			
+		case VERIFY_NIP05_SUCCESS:
+			return {
+				...state,
+				nip05Verification: {
+					loading: false,
+					error: null,
+					verified: true,
+					user: data.user
+				}
+			};
+			
+		case VERIFY_NIP05_FAILURE:
+			return {
+				...state,
+				nip05Verification: {
+					...state.nip05Verification,
+					loading: false,
+					error: action.error,
+					verified: false
+				}
 			};
 
 		default:

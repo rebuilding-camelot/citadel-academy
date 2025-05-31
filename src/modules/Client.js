@@ -1,4 +1,7 @@
-import { nip05, nip19, relayInit, getPublicKey, getEventHash, signEvent } from 'nostr-tools';
+import { Relay } from 'nostr-tools';
+import * as nip05 from 'nostr-tools/nip05';
+import * as nip19 from 'nostr-tools/nip19';
+import { getPublicKey, getEventHash, finalizeEvent } from 'nostr-tools/pure';
 
 import Feed from './Feed';
 
@@ -48,16 +51,30 @@ class Client {
 
 	}
 
-	// Connect to a relay
+	/**
+	 * Connect to a Nostr relay
+	 * 
+	 * This method handles connecting to a relay, with proper URL normalization
+	 * to prevent duplicate connections and implements reconnection logic
+	 * with exponential backoff.
+	 * 
+	 * @param {Object} params - Connection parameters
+	 * @param {string} params.url - The relay URL to connect to
+	 * @param {boolean} params.maintain - Whether to maintain the connection
+	 * @returns {Promise<void>}
+	 */
 	async connectToRelay (params) {
 
+		// Normalize URL by removing trailing slash for consistency
 		const url = params.url[params.url.length - 1] === '/' ? params.url.slice(0, -1) : params.url;
 
-		// Prevent opening duplicate connection
+		// Prevent opening duplicate connections by checking existing relays
 		for (let _relay of this.relays) {
+			// Normalize existing relay URL for accurate comparison
+			const relayUrl = _relay.url[_relay.url.length - 1] === '/' ? _relay.url.slice(0, -1) : _relay.url;
 
-			if (_relay.url === url) {
-
+			if (relayUrl === url) {
+				// If already connected, just update the status if needed
 				if (this.relayStatusListener && params.maintain) {
 					this.relayStatusListener({ url: params.url }, { maintain: true });
 				}
@@ -69,114 +86,129 @@ class Client {
 		let relay;
 
 		try {
-
-			relay = relayInit(url);
-
-		} catch (err) {
-
-		}
-
-		relay.on('connect', () => {
-
-			clearTimeout(relay._reconnectTimeout);
+			console.log(`Attempting to connect to relay: ${url}`);
+			// Create a relay instance
+			relay = new Relay(url);
+			
+			// Add custom properties for reconnection logic
 			relay._encounteredError = false;
 			relay._reconnectMillsecs = 500;
+			relay._pendingReconnect = false;
+			relay._failedAttempts = 0;
+			relay._maxReconnectAttempts = 10; // Increased maximum number of reconnect attempts
+			
+			// Set up event handlers using the new API
+			relay.onconnect = () => {
+				clearTimeout(relay._reconnectTimeout);
+				relay._encounteredError = false;
+				relay._reconnectMillsecs = 500;
+				relay._failedAttempts = 0; // Reset failed attempts on successful connection
+				console.log(`Successfully connected to relay: ${url}`);
 
-			if (this.relayStatusListener) {
+				if (this.relayStatusListener) {
+					const onConnectStatus = {
+						error: false,
+						connected: true,
+						connecting: false
+					};
 
-				const onConnectStatus = {
-					error: false,
-					connected: true,
-					connecting: false
-				};
+					if (params.maintain) {
+						onConnectStatus.maintain = true;
+					}
 
-				if (params.maintain) {
-
-					onConnectStatus.maintain = true;
+					this.relayStatusListener(relay, onConnectStatus);
 				}
 
-				this.relayStatusListener(relay, onConnectStatus);
-			}
-
-			Object.keys(this.subscriptions).forEach(name => {
-
-				const { feed, filters, options } = this.subscriptions[name];
-
-				feed.subscribe(name, relay, filters, options);
-			});
-		});
-
-		relay.on('error', () => {
-
-			//console.log(`failed to connect to ${relay.url}`);
-
-			relay._encounteredError = true;
-
-			if (this.relayStatusListener) {
-
-				this.relayStatusListener(relay, {
-					connecting: false,
-					connected: false,
-					error: true
+				Object.keys(this.subscriptions).forEach(name => {
+					const { feed, filters, options } = this.subscriptions[name];
+					feed.subscribe(name, relay, filters, options);
 				});
-			}
+			};
 
-			if (relay._pendingReconnect) { return; }
+			relay.onerror = () => {
+				relay._encounteredError = true;
+				relay._failedAttempts++;
+				console.log(`Error on relay ${url}, attempt ${relay._failedAttempts}`);
 
-			if (!relay._reconnectMillsecs) {
+				if (this.relayStatusListener) {
+					this.relayStatusListener(relay, {
+						connecting: false,
+						connected: false,
+						error: true
+					});
+				}
 
-				relay._reconnectMillsecs = 500;
-			}
+				// If we've exceeded the maximum number of reconnect attempts, don't try again
+				if (relay._failedAttempts > relay._maxReconnectAttempts) {
+					console.log(`Giving up on connecting to ${relay.url} after ${relay._failedAttempts} attempts`);
+					return;
+				}
 
-			relay._reconnectMillsecs = relay._reconnectMillsecs * 2;
+				if (relay._pendingReconnect) { return; }
 
-			clearTimeout(relay._reconnectTimeout);
+				if (!relay._reconnectMillsecs) {
+					relay._reconnectMillsecs = 500;
+				}
 
-			relay._pendingReconnect = true;
+				relay._reconnectMillsecs = Math.min(relay._reconnectMillsecs * 2, 30000); // Cap at 30 seconds
 
-			// Attempt reconnect with an exponential backoff to avoid DDOSing relays
-			relay._reconnectTimeout = setTimeout(async () => {
+				clearTimeout(relay._reconnectTimeout);
 
-				relay._pendingReconnect = false;
+				relay._pendingReconnect = true;
 
-				try {
-					await relay.connect();
-				} catch (err) {}
+				// Attempt reconnect with an exponential backoff to avoid DDOSing relays
+				relay._reconnectTimeout = setTimeout(async () => {
+					relay._pendingReconnect = false;
 
-				relay._pendingReconnect = false;
+					try {
+						console.log(`Attempting to reconnect to ${relay.url} (attempt ${relay._failedAttempts})`);
+						await relay.connect();
+					} catch (err) {
+						console.log(`Failed to reconnect to ${relay.url}: ${err.message || 'Unknown error'}`);
+					}
 
-			}, relay._reconnectMillsecs);
+					relay._pendingReconnect = false;
+				}, relay._reconnectMillsecs);
 
-			//console.log(relay.url + ' reconnecting after ' + relay._reconnectMillsecs + ' ms. . .');
+				console.log(`${relay.url} reconnecting after ${relay._reconnectMillsecs} ms...`);
+			};
 
-		});
+			relay.onclose = async () => {
+				if (this.relayStatusListener) {
+					this.relayStatusListener(relay, {
+						connected: false,
+						connecting: true
+					});
+				}
 
-		relay.on('disconnect', async () => {
+				// Only attempt to reconnect if we haven't exceeded the maximum attempts
+				// and we haven't encountered a serious error
+				if (!relay._encounteredError && relay._failedAttempts <= relay._maxReconnectAttempts) {
+					try {
+						console.log(`${relay.url} connection closed, attempting to reconnect...`);
+						
+						// Add a small delay before reconnecting to avoid rapid reconnection attempts
+						await new Promise(resolve => setTimeout(resolve, 1000));
+						
+						await relay.connect();
+					} catch (err) {
+						console.log(`Error reconnecting to ${relay.url}: ${err.message || 'Unknown error'}`);
+						relay._failedAttempts++;
+					}
+				}
+			};
 
-			this.relayStatusListener(relay, {
-				connected: false,
-				connecting: true
-			});
-
-			if (!relay._encounteredError) {
-
-				try {
-					//console.log(relay.url + ' reconnecting. . .');
-					await relay.connect();
-				} catch (err) {}
-			}
-
-		});
-
-		try {
-
+			// Connect to the relay
 			await relay.connect();
 
 		} catch (err) {
-			
+			console.error('Error connecting to relay:', url, err.message || err);
 		}
 
-		this.relays.push(relay);
+		if (relay && relay.status === 1) { // Only add successfully connected relays
+			this.relays.push(relay);
+			console.log(`Added relay to pool: ${url}`);
+		}
 	}
 
 	async createEvent (data, options = {}) {
@@ -194,9 +226,8 @@ class Client {
 				throw Error('Public key conflicts with existing');
 			}
 
-			event.pubkey = pubkey;
-			event.id = getEventHash(event);
-			event.sig = signEvent(event, options.privateKey);
+			// Use finalizeEvent instead of manually setting pubkey, id, and sig
+			event = finalizeEvent(event, options.privateKey);
 
 		} else if (this.env.nostr) {
 
@@ -210,20 +241,35 @@ class Client {
 		return event;
 	}
 
+	/**
+	 * Publish an event to all connected relays
+	 * 
+	 * This method handles publishing a Nostr event to all connected relays
+	 * with proper error handling and status reporting.
+	 * 
+	 * @param {Object} event - The Nostr event to publish
+	 * @param {Function} handleStatus - Callback function for status updates
+	 * @returns {void}
+	 */
 	publishEvent (event, handleStatus) {
 
-		// Send the event to each relay and
-		// listen for status messages
-		this.relays.forEach(relay => {
-
-			const pub = relay.publish(event);
-
-			for (let status of [ 'ok' ]) {
+		// Send the event to each connected relay and
+		// provide status updates through the callback
+		this.relays.forEach(async relay => {
+			try {
+				// In the nostr-tools API, publish returns a promise that resolves when the event is published
+				const pub = await relay.publish(event);
 				
-				pub.on(status, () => {
-
-					handleStatus(status, relay);
-				});
+				// If we get here, the event was published successfully
+				if (typeof handleStatus === 'function') {
+					handleStatus('ok', relay);
+				}
+			} catch (error) {
+				console.error(`Error publishing to ${relay.url}:`, error);
+				// Report the error through the callback if provided
+				if (typeof handleStatus === 'function') {
+					handleStatus('failed', relay, error);
+				}
 			}
 		});
 	}
@@ -397,17 +443,6 @@ class Client {
 
 				const now = Math.floor(Date.now() / 1000);
 
-				// Pull notifications for user
-				// this.subscribe(notificationsFeedName, feed, [{
-				// 	kinds: [ 1, 6, 7 ],
-				// 	'#p': [ pubkey ],
-				// 	since: now - (86400 * 5)
-				// }, {
-				// 	kinds: [ 1, 4550 ],
-				// 	'#a': communityIds,
-				// 	since: now - (86400 * 5)
-				// }]);
-
 				feed.subscribe(notificationsFeedName, relay, [{
 					kinds: [ 1, 7 ],
 					'#p': [ pubkey ],
@@ -421,11 +456,6 @@ class Client {
 					'#a': communityIds,
 					since: now - (86400 * 5)
 				}]);
-
-				// this.subscribe(modqueFeedName, feed, [{
-				// 	kinds: [ 1, 4550 ],
-				// 	'#a': communityIds
-				// }]);
 
 			} else if (options.subscription === 'notifications_context') {
 
@@ -531,800 +561,267 @@ class Client {
 						}));
 					}
 
-					if (handlers.onLoadedModqueue) {
-
-						handlers.onLoadedModqueue(feed, relay);
-					}
-
-				}, 1500);
+				}, 500);
 
 			} else if (options.subscription === messageFeedName) {
 
-				const p = {};
-
-				for (let _id of Object.keys(feed.dms)) {
-
-					const _message = feed.dms[_id];
-
-					if (_message.pubkey !== pubkey) {
-						p[_message.pubkey] = true;
-					}
-
-					for (let tag of _message.tags) {
-						if (tag[0] === 'p' && tag[1] !== pubkey) {
-							p[tag[1]] = true;
-						}
-					}
-				}
-
 				// this.subscribe(`dm_metadata_${pubkey}`, feed, [{
 				// 	kinds: [ 0 ],
-				// 	authors: Object.keys(p)
+				// 	authors: Object.keys(feed.dmAuthors)
 				// }]);
 
 				feed.subscribe(`dm_metadata_${pubkey}`, relay, [{
 					kinds: [ 0 ],
-					authors: Object.keys(p)
+					authors: Object.keys(feed.dmAuthors)
 				}]);
 			}
-
 		});
 
-		// Pull metadata, contacts, communities, for user
 		this.subscribe(profileFeedName, feed, [{
 			authors: [ pubkey ],
-			kinds: [ 0, 3, 34550, 30001 ]
-		}, {
-			'#p': [ pubkey ],
-			kinds: [ 34550 ]
+			kinds: [ 0, 3, 34550 ]
 		}]);
 
-		// Pull direct messages for user
 		this.subscribe(messageFeedName, feed, [{
 			'#p': [ pubkey ],
-			kinds: [ 4 ],
-			limit: 1000
+			kinds: [ 4 ]
 		}, {
 			authors: [ pubkey ],
-			kinds: [ 4 ],
-			limit: 1000
+			kinds: [ 4 ]
 		}]);
 
 		return feed;
-
-	};
-
-	/* Create a feed to display a user's profile */
-	createProfileFeed (params, onEose, contacts = {}, handlers = {}) {
-
-		const feed = new Feed({
-			profile: { pubkey: params.pubkey }
-		});
-
-		let profileContacts = [];
-
-		const primaryFeedName = `profile_primary_${params.pubkey}`;
-		const contextFeedName = `profile_context_${params.pubkey}`;
-		const quotedFeedName = `profile_quoted_${params.pubkey}`;
-
-		const parsedEventId = {};
-		const didParseEvent = {};
-
-		// Listen for user's contacts
-		feed.listenForContacts(params.pubkey, ({ contacts }) => {
-
-			if (contacts.length > 0) {
-				profileContacts = contacts;
-			}
-		});
-
-		feed.listenForEose((relay, options) => {
-
-			if (options.subscription === contextFeedName) {
-
-				for (let item of feed.list()) {
-
-					if (didParseEvent[item.event.id] || !item.event.content) { continue; }
-
-					Object.assign(parsedEventId, this.parseContentRefs(item.event.content)['e']);
-					didParseEvent[item.event.id] = true;
-				}
-
-				const ids = Object.keys(parsedEventId);
-
-				if (ids.length > 0) {
-
-					feed.subscribe(quotedFeedName, relay, [{
-						ids
-					}]);
-				}
-
-				return;
-			}
-
-			// Only create secondary subscriptions when
-			// the end of the primary feed is reached
-			if (options.subscription !== primaryFeedName) { return; }
-
-			if (onEose) { onEose(relay, options); }
-
-			const primaryFeedInfo = this.subscriptions[primaryFeedName];
-
-			if (!primaryFeedInfo) { return; }
-
-			const { until } = primaryFeedInfo.filters[0];
-
-			const ref = this.contextRef(Object.keys(feed.items).map(id => {
-
-				return feed.items[id].event;
-
-			}).filter(event => {
-
-				if (event.pubkey !== params.pubkey) {
-					return false;
-				}
-
-				if (until && event.created_at >= until) {
-					return false;
-				}
-
-				return true;
-
-			}), undefined, feed.items);
-
-			// Add signed in user's pubkey to people involved so
-			// their replies will also show up in the feed
-			if (params.active && ref.p.indexOf(params.active) === -1) {
-				ref.p.push(params.active)
-			}
-
-			const whitelistPubkeys = [
-				...Object.keys(contacts[params.active] || {}),
-				...profileContacts
-			];
-
-			// Add people that signed in user is following as well as
-			// people that the profile is following so that their replies
-			// will show up too
-			for (let contact of whitelistPubkeys) {
-				if (ref.p.indexOf(contact) === -1) {
-					ref.p.push(contact);
-				}
-			}
-
-			const filters = this.contextFilters(feed, relay, ref, params);
-
-			if (filters.length > 0) {
-
-				//this.subscribe(contextFeedName, feed, filters);
-				feed.subscribe(contextFeedName, relay, filters);
-			}
-
-		});
-
-		// Pull the user's posts
-		return this.subscribe(primaryFeedName, feed, [{
-			authors: [ params.pubkey ],
-			kinds: [ 1, 5, 6, 7, 9 ],
-			limit: params.batch || 40,
-		}, {
-			authors: [ params.pubkey ],
-			kinds: [ 0, 3 ]
-		}]);
 	}
 
-	/* Load Recent Threads */
-	loadRecent (feed, feedName, options = {}) {
-
-		const recent = feed.list().filter(item => {
-			return item.recent === feedName;
-		}).map(item => {
-			return item.event;
-		});
-
-		const ref = this.contextRef(recent);
-
-		const filters = this.contextFilters(feed, null, ref);
-
-		if (filters.length > 0) {
-
-			this.subscribe(`${feedName}_recent`, feed, filters, options);
-		}
-
-		for (let event of recent) {
-
-			feed.items[event.id].recent = undefined;
-		}
-	}
-
-	/* Load Older Threads */
-	expandProfileFeed (feed, params = {}) {
-
-		const primaryFeedName = `profile_primary_${params.pubkey}`;
-		const primaryFeedSubs = feed.subscriptions[primaryFeedName];
-
-		if (!primaryFeedSubs) { return; }
-
-		let until;
-
-		// Get the timestamp of the oldest event that
-		// was created by the profile's pubkey. That
-		// will be used to set "until" for new filter
-		for (let id of Object.keys(feed.items)) {
-
-			const { event } = feed.items[id];
-
-			if (event.pubkey !== params.pubkey) { continue; }
-
-			if (([ 1, 5, 6, 7 ]).indexOf(event.kind) === -1) { continue; }
-
-			if (!until || event.created_at < until) {
-				until = feed.items[id].event.created_at;
-			}
-		}
-
-		if (!until) { return; }
-
-		// Invalidate EOSE completion flag for each
-		// relay so secondary subs can fire again
-		for (let url of Object.keys(primaryFeedSubs)) {
-
-			primaryFeedSubs[url].eose = false;
-		}
-
-		return this.subscribe(primaryFeedName, feed, [{
-			authors: [ params.pubkey ],
-			kinds: [ 1, 5, 6, 7 ],
-			limit: 40,
-			until
-		}]);
-
-	}
-
-	subscribe (name, feed, filters, options) {
-
-		// Create a subscription on each relay
-		this.relays.forEach(relay => {
-
-			feed.subscribe(name, relay, filters, options);
-		});
+	subscribe (name, feed, filters, options = {}) {
 
 		this.registerFeed(name, feed, filters, options);
 
-		return feed;
-	}
+		for (let relay of this.relays) {
 
-	/* Get profile info from NIP-19 or NIP-05 identifier */
-	async identify (s, options = {}) {
-
-		const profile = {};
-
-		try {
-
-			if (s.indexOf('npub') === 0 && s.length === 63) { 
-
-				const _npub = nip19.decode(s);
-
-				if (_npub.data) {
-					profile.pubkey = _npub.data;
-				}
-
-			} else if (s.indexOf('nprofile') === 0 && s.length > 20) {
-
-				const _nprofile = nip19.decode(s);
-
-				if (_nprofile.data.pubkey) {
-					profile.pubkey = _nprofile.data.pubkey;
-				}
-
-				if (_nprofile.data.relays) {
-
-					profile.relays = _nprofile.data.relays;
-				}
-
-			} else if (s.length === 64) { // Unencoded pubkey?
-
-				profile.pubkey = s;
-
-			} else { // NIP-05?
-
-				let _nip05;
-
-				if (s.indexOf('@') !== -1 || s.indexOf('.') !== -1) { // Domain specified
-
-					_nip05 = s;
-
-				} else if (options.defaultDomain) { // Use default domain if provided
-
-					_nip05 = `${s}@${options.defaultDomain}`;
-				}
-
-				if (_nip05) { // Try to look up info if it exists
-
-					const info = await nip05.queryProfile(_nip05);
-
-					if (info.pubkey) {
-
-						profile.pubkey = info.pubkey;
-						profile.nip05 = s;
-
-						if (info.relays && info.relays.length > 0) {
-							profile.relays = info.relays;
-						}
-					}
-				}
-			}
-
-		} catch (err) {
-
-			console.log('Failed to parse identifier', err);
+			feed.subscribe(name, relay, filters, options);
 		}
-
-		return profile;
-	}
-
-
-	/* Event Composers  */
-
-	type0 (post) {
-
-		return {
-			...post,
-			kind: 0,
-			tags: []
-		};
-	}
-
-	/* Text Note */
-	type1 (post, params) {
-
-		const tags = this.populateReplyTags(params);
-
-		const content = this.populateMentionTags(tags, post.content);
-
-		this.populateHashTags(tags, post.content);
-
-		return {
-			...post,
-			kind: 1,
-			content,
-			tags
-		};
-	}
-
-	type3 (post, params) {
-
-		return {
-			...post,
-			kind: 3,
-			tags: params.contacts.map(contact => {
-				return [ 'p', contact ];
-			})
-		};
-	}
-
-	/* Delete */
-	type5 (post, remove) {
-
-		return {
-			...post,
-			kind: 5,
-			tags: remove.map(item => {
-				return [ 'e', item.event.id ];
-			})
-		};
-	}
-	
-	/* Repost */
-	type6 (post, repost) {
-
-		return {
-			...post,
-			kind: 6,
-			tags: [
-				[ 'e', repost.event.id, '', 'root'],
-				[ 'p', repost.event.pubkey ],
-				...repost.event.tags.map(tag => {
-
-					if (tag[0] === 'e' && tag[1] !== repost.event.id) {
-						return [ 'e', tag[1] ];
-					} else if (tag[0] === 'p' && tag[1] !== repost.event.pubkey) {
-						return [ 'p', tag[1] ];
-					}
-
-				}).filter(tag => { return tag; })
-			]
-		};
-	}
-
-	type7 (post, params) {
-
-		const tags = this.populateReplyTags(params);
-
-		return {
-			...post,
-			kind: 7,
-			tags
-		};
-	}
-
-	/* Community */
-	type34550 (post, params) {
-
-		const tags = [ [ 'd', params.name ] ];
-
-		if (params.description) {
-			tags.push([ 'description', params.description ]);
-		}
-
-		if (params.image) {
-			tags.push([ 'image', params.image ]);
-		}
-
-		if (params.rules) {
-			tags.push([ 'rules', params.rules ]);
-		}
-
-		if (params.rankMode) {
-
-			if (([ 'votes', 'zaps' ]).indexOf(params.rankMode) !== -1) {
-				tags.push([ 'rank_mode', params.rankMode ])
-			}
-		}
-
-		if (params.rankBatch) {
-
-			tags.push([ 'rank_batch', String(params.rankBatch) ]);
-
-		} else {
-
-			tags.push([ 'rank_batch', '0' ]);
-		}
-
-		for (let pubkey of params.moderators) {
-			tags.push([ 'p', pubkey, '', 'moderator' ]);
-		}
-
-		return {
-			...post,
-			kind: 34550,
-			tags
-		};
-	}
-
-
-	/* Helpers */
-
-	contextRef (events, options = {}, items = {}) {
-
-		const e = {};
-		const p = {};
-		const ids = {};
-
-		for (let event of events) {
-
-			e[event.id] = true;
-			p[event.pubkey] = true;
-
-			// Get notes to pubkeys and events from tags
-			for (let tag of (event.tags || [])) {
-
-				let gotRoot;
-
-				if (tag[0] === 'p') {
-					p[tag[1]] = true;
-				} else if (tag[0] === 'e' || tag[0] === 'q') {
-
-					if (!options.rootOnly || !gotRoot) {
-						e[tag[1]] = true;
-						gotRoot = true;
-					}
-
-					if (items[tag[1]] && items[tag[1]].event) {
-						if (items[tag[1]].event.pubkey) {
-							p[items[tag[1]].event.pubkey] = true;
-						}
-
-						if (items[tag[1]].event.tags) {
-							for (let _tag of items[tag[1]].event.tags) {
-								if (_tag[0] === 'p') {
-									p[_tag[1]] = true;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			Object.assign(ids, this.parseContentRefs(event.content)['e']);
-		}
-
-		return {
-			e: Object.keys(e),
-			p: Object.keys(p),
-			ids: Object.keys(ids)
-		};
-	}
-
-	contextFilters (feed, relay, ref, params = {}) {
-
-		const filters = [];
-
-		if (ref.e.length > 0) {
-
-			const ids = ref.e.filter(id => {
-				return !feed.items[id] || feed.items[id].phantom;
-			});
-
-			if (ids.length > 0) {
-
-				// Fetch referenced posts
-				filters.push({
-					kinds: [ 1 ],
-					ids 
-				});
-			}
-
-			if (ref.p.length > 0) {
-
-				// Fetch replies to main posts from
-				// other people who were involved
-				filters.push({
-					'authors': ref.p,
-					'#e': ref.e,
-					'kinds': [ 1 ]
-				});
-
-				if (params.active) {
-
-					// Fetch reactions only from signed in user
-					filters.push({
-						'authors': [ params.active ],
-						'#e': ref.e,
-						'kinds': [ 7 ]
-					});
-				}
-
-				const requestMetadata = relay ? feed.unknown(relay, ref.p) : ref.p;
-
-				if (requestMetadata.length > 0) {
-
-					filters.push({
-						authors: requestMetadata,
-						kinds: [ 0 ]
-					});
-				}
-			}
-		}
-
-		if (ref.ids.length > 0) {
-
-			filters.push({
-				ids: ref.ids
-			});
-		}
-
-		return filters;
 	}
 
 	parseContentRefs (content) {
 
-		const alphanum = '0123456789abcdefghijklmnopqrstuvwxyz';
-		const e = {};
+		const refs = {
+			'e': {},
+			'p': {},
+			'nprofile': {},
+			'nevent': {},
+			'note': {},
+			'npub': {}
+		};
 
-		// Parse references to events from content string
-		content.split('nostr:').forEach(s => {
+		if (!content) { return refs; }
 
-			let parsed;
+		// Match nostr: protocol links
+		const nostrMatches = content.match(/nostr:(npub|note|nevent|nprofile)[a-zA-Z0-9]+/g) || [];
 
-			if (s.indexOf('note1') === 0) {
-
-				parsed = s.substring(0, 63);
-
-			} else if (s.indexOf('nevent1') === 0) {
-
-				for (let c = 0; c < s.length; c++) {
-
-					if (alphanum.indexOf(s[c]) === -1) {
-
-						parsed = s.substring(0, c);
-						break;
-					}
-				}
-
-				if (!parsed) {
-					parsed = s;
-				}
-			}
-
-			if (parsed) {
-
-				try {
-
-					const decoded = nip19.decode(parsed);
-
-					if (decoded.type === 'note') {
-						e[decoded.data] = true;
-					} else if (decoded.type === 'nevent') {
-						e[decoded.data.id] = true;
-					}
-
-				} catch (err) {}
-			}
-
-		});
-
-		return { e };
-	}
-
-	populateReplyTags (replyTo) {
-
-		// The e tags for events being referenced
-		const etags = [];
-
-		// Public keys that must be added
-		// as p tags to the tags array
-		const pubk = [];
-
-		if (replyTo) { // If replying to another item
-
-			// Copy the root e tag of the item being
-			// replied to is it exists
-			if (replyTo.eroot && replyTo.eroot !== replyTo.event.id) {
-				etags.push([ 'e', replyTo.eroot, '', 'root' ]);
-			}
-
-			// Add the id of the event being replied to as reply tag
-			etags.push([ 'e', replyTo.event.id, '', 'reply' ]);
-
-			// Copy over additional p tags from the event
-			for (let tag of replyTo.event.tags) {
-				if (tag[0] === 'p' && pubk.indexOf(tag[1]) === -1) {
-					pubk.push(tag[1]);
-				}
-			}
-
-			// Add the author of the event being replied to as p tag
-			if (pubk.indexOf(replyTo.event.pubkey) === -1) {
-				pubk.push(replyTo.event.pubkey);
-			}
-		}
-
-		return [
-			...etags,
-			...pubk.map(pubkey => { return [ 'p', pubkey ]; })
-		];
-	}
-
-	populateHashTags (tags, content) {
-
-		const t = {};
-
-		const matched = content.match(/#\w+/g);
-
-		if (!matched) { return; }
-
-		for (let match of matched) {
-
-			const tag = match.slice(1);
-
-			if (!tag) { continue; }
-
-			t[tag] = true;
-			t[tag.toLowerCase()] = true;
-		}
-
-		for (let tag of Object.keys(t)) {
-
-			tags.push([ 't', tag ]);
-		}
-	}
-
-	populateMentionTags (tags, content) {
-
-		const mentioned = {};
-
-		for (let s of content.split('nostr:')) {
-
-			if (s.indexOf('npub1') === 0) {
-
-				try {
-
-					const decoded = nip19.decode(s.substring(0, 63));
-
-					if (decoded.type === 'npub') {
-						mentioned[decoded.data] = true;
-					}
-
-				} catch (err) {}
-			}
-		}
-
-		const segments = [];
-
-		for (let s of content.split('@npub1')) {
-
-			let replace;
+		for (let match of nostrMatches) {
 
 			try {
 
-				const decoded = nip19.decode('npub1' + s.substring(0, 58));
+				const decoded = nip19.decode(match.slice(6));
+				const type = decoded.type;
 
-				if (decoded.type === 'npub') {
-					mentioned[decoded.data] = true;
-					replace = decoded.data;
+				if (type === 'npub') {
+
+					refs.npub[decoded.data] = true;
+					refs.p[decoded.data] = true;
+
+				} else if (type === 'note') {
+
+					refs.note[decoded.data] = true;
+					refs.e[decoded.data] = true;
+
+				} else if (type === 'nevent') {
+
+					refs.nevent[decoded.data.id] = true;
+					refs.e[decoded.data.id] = true;
+
+				} else if (type === 'nprofile') {
+
+					refs.nprofile[decoded.data.pubkey] = true;
+					refs.p[decoded.data.pubkey] = true;
 				}
 
-			} catch (err) { console.log('err', err); }
-
-			if (replace) {
-
-				segments.push(`nostr:${'npub1' + s.substring(0, 58)}${s.slice(58)}`);
-
-			} else {
-
-				segments.push(s);
-			}
+			} catch (err) {}
 		}
 
-		for (let tag of tags) {
+		// Match bech32 encoded entities
+		const bech32Matches = content.match(/(npub|note|nevent|nprofile)[a-zA-Z0-9]+/g) || [];
 
-			if (tag[0] === 'p' && mentioned[tag[1]]) {
-				delete mentioned[tag[1]]
-			}
+		for (let match of bech32Matches) {
+
+			try {
+
+				const decoded = nip19.decode(match);
+				const type = decoded.type;
+
+				if (type === 'npub') {
+
+					refs.npub[decoded.data] = true;
+					refs.p[decoded.data] = true;
+
+				} else if (type === 'note') {
+
+					refs.note[decoded.data] = true;
+					refs.e[decoded.data] = true;
+
+				} else if (type === 'nevent') {
+
+					refs.nevent[decoded.data.id] = true;
+					refs.e[decoded.data.id] = true;
+
+				} else if (type === 'nprofile') {
+
+					refs.nprofile[decoded.data.pubkey] = true;
+					refs.p[decoded.data.pubkey] = true;
+				}
+
+			} catch (err) {}
 		}
 
-		for (let p of Object.keys(mentioned)) {
+		// Match hex encoded entities
+		const hexMatches = content.match(/(#\[([0-9]+)\])/g) || [];
+		const hexTags = {};
 
-			tags.push([ 'p', p ]);
+		for (let match of hexMatches) {
+
+			const tagIndex = match.slice(2, -1);
+
+			hexTags[tagIndex] = true;
 		}
 
-		return segments.join('');
+		return refs;
 	}
 
-	getThreadRefs = (item, options = {}) => {
+	getThreadRefs (item, options = {}) {
 
-		const events = {};
-		const parsed = {};
-
-		const get = (replies) => {
-
-			for (let reply of replies) {
-
-				if (options.includeEventIds) {
-
-					events[reply.event.id] = true;
-				}
-
-				if (options.includeParsedIds && reply.event.content) {
-					Object.assign(parsed, this.parseContentRefs(reply.event.content)['e']);
-				}
-
-				get(reply.replies);
-			}
+		const refs = {
+			parsed: {},
+			events: {}
 		};
 
-		get([ item ]);
-		
-		return { events, parsed };
-	};
+		if (!item || !item.event) { return refs; }
 
-	normalizeKey (value) {
+		const { event } = item;
 
-		let hex;
-
-		if (value.substring(0, 4) === 'nsec' || value.substring(0, 4) === 'npub') {
-			const decoded = nip19.decode(value);
-			hex = decoded.data;
+		if (options.includeEventIds) {
+			refs.events[event.id] = true;
 		}
 
-		return hex || value;
+		if (options.includeParsedIds && event.content) {
+
+			const parsed = this.parseContentRefs(event.content);
+
+			for (let id of Object.keys(parsed.e)) {
+				refs.parsed[id] = true;
+			}
+		}
+
+		if (event.tags) {
+
+			for (let tag of event.tags) {
+
+				if (tag[0] === 'e') {
+					refs.events[tag[1]] = true;
+				}
+			}
+		}
+
+		return refs;
 	}
 
-	pubkeyLabel (pubkey) {
+	/* Utility methods */
 
-		const encoded = nip19.npubEncode(pubkey);
-		return encoded.slice(0, 8) + '...' + encoded.slice(-4);
+	async verifyNip05 (pubkey, nip05Id) {
+
+		try {
+
+			const res = await nip05.queryProfile(nip05Id);
+
+			return res && res.pubkey === pubkey;
+
+		} catch (err) {
+
+			return false;
+		}
+	}
+
+	async nip05LookupByName (name, domain) {
+
+		try {
+
+			const res = await nip05.searchDomain(domain);
+
+			return res.names[name];
+
+		} catch (err) {
+
+			return null;
+		}
+	}
+
+	async nip05LookupByPubkey (pubkey, domain) {
+
+		try {
+
+			const res = await nip05.searchDomain(domain);
+
+			for (let name of Object.keys(res.names)) {
+
+				if (res.names[name] === pubkey) {
+					return name;
+				}
+			}
+
+			return null;
+
+		} catch (err) {
+
+			return null;
+		}
+	}
+
+	async nip05Lookup (query) {
+
+		if (!query || query.indexOf('@') === -1) {
+			return null;
+		}
+
+		const [ name, domain ] = query.split('@');
+
+		if (!name || !domain) {
+			return null;
+		}
+
+		try {
+
+			const res = await nip05.queryProfile(query);
+
+			return res;
+
+		} catch (err) {
+
+			return null;
+		}
+	}
+
+	async nip05Search (domain) {
+
+		try {
+
+			const res = await nip05.searchDomain(domain);
+
+			return res;
+
+		} catch (err) {
+
+			return null;
+		}
 	}
 }
 

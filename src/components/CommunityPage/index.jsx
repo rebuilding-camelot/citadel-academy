@@ -427,7 +427,6 @@ class CommunityPage extends Component {
 					backgroundPosition: 'center',
 					//border: `1px dotted ${COLORS.secondary}`,
 					zIndex: 1,
-					width: '100%',
 					marginTop: 1
 				}}
 			/>
@@ -693,7 +692,6 @@ class CommunityPage extends Component {
 			<div
 				style={this.props.mobile ? {
 					width: '100%',
-					marginTop: 19,
 					position: 'absolute',
 					left: 0,
 					marginTop: 6

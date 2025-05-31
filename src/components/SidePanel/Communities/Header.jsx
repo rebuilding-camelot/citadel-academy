@@ -122,7 +122,6 @@ class Header extends PureComponent {
     return ( // TODO list selector
       <div
         style={{
-          fontSize: 13,
           display: 'flex',
           alignItems: 'center',
           fontSize: 12,

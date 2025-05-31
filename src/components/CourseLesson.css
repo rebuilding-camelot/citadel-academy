@@ -1,0 +1,128 @@
+.course-lesson-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.lesson-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #8B5CF6;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.lesson-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+}
+
+.lesson-error h2 {
+  color: #ef4444;
+  margin-top: 0;
+}
+
+.lesson-error button {
+  background: #8B5CF6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* Progress tracking styles */
+.lesson-completion {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.complete-button {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complete-button:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.complete-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.progress-updated {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  padding: 15px 30px;
+  text-align: center;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.progress-updated p {
+  margin: 0;
+}
+
+/* Navigation styles */
+.lesson-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.nav-button {
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+  border: 1px solid #8B5CF6;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-button:hover {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+.nav-button.prev::before {
+  content: '←';
+  margin-right: 8px;
+}
+
+.nav-button.next::after {
+  content: '→';
+  margin-left: 8px;
+}

@@ -70,7 +70,7 @@ const SupportPage = ({ mobile }) => {
           <div style={{ marginBottom: 20 }}>
             <h3 style={{ fontSize: 18 }}>Community Chat</h3>
             <p>Join our Nostr community channels for peer support and discussions:</p>
-            <a href="#" style={buttonStyle}>
+            <a href="https://iris.to/npub1p9a5sclpw5prjhx0c0u4ufjnwmnt2pxcvpa4lxnf4wn53vawuatqkmzxyt" style={buttonStyle} target="_blank" rel="noopener noreferrer">
               <Icon name="users" /> Join Community Chat
             </a>
           </div>
@@ -78,7 +78,7 @@ const SupportPage = ({ mobile }) => {
           <div>
             <h3 style={{ fontSize: 18 }}>Direct Support</h3>
             <p>Need personalized help? Our support team is ready to assist:</p>
-            <a href="mailto:support@citadelacademy.com" style={buttonStyle}>
+            <a href="https://iris.to/npub1qq50zturtx4ns2uf2adt26pcpmez47ur9ds6a4fwaax5u5evr3nsnu2qvm" style={buttonStyle} target="_blank" rel="noopener noreferrer">
               <Icon name="mail" /> Contact Support
             </a>
           </div>

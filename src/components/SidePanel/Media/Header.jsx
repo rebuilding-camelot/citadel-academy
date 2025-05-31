@@ -43,7 +43,6 @@ class Header extends Component {
           display: 'flex',
           alignItems: 'center',
           fontSize: 12,
-          alignItems: 'center',
           fontFamily: 'JetBrains-Mono-Regular'
         }}>
           <div
@@ -106,7 +105,6 @@ class Header extends Component {
         style={{
           display: 'flex',
           alignItems: 'center',
-          fontSize: 13,
           whiteSpace: 'nowrap',
           fontFamily: 'JetBrains-Mono-Regular',
           fontSize: 11

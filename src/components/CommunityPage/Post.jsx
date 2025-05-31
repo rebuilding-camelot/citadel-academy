@@ -37,7 +37,6 @@ class Post extends PureComponent {
 					paddingRight: 7,
 					borderRadius: 3,
 					background: 'rgba(255,255,255,0.05)',
-					borderRadius: 3,
 					paddingTop: 2
 				}}>
 					pending approval

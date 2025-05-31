@@ -33,9 +33,20 @@ import QRDisplay from './components/QRDisplay';
 import MobileNav from './components/MobileNav';
 import Nav from './components/Nav';
 import CourseViewerPage from './components/CourseViewerPage';
+import CoursePage from './components/CourseViewerPage/CoursePage';
+import CourseModule from './components/CourseModule';
+import CourseLesson from './components/CourseLesson';
+import LessonCreator from './components/LessonCreator';
+import BadgeGallery from './components/BadgeGallery';
+import BadgeCreator from './components/BadgeCreator';
+import BadgeAwarder from './components/BadgeAwarder';
+import UserBadges from './components/UserBadges';
 import DashboardPage from './components/DashboardPage';
+import Dashboard from './components/Dashboard';
 import AboutPage from './components/AboutPage';
 import SupportPage from './components/SupportPage';
+import MembersOnlyPage from './components/MembersOnlyPage';
+import NostrWalletConnectPage from './components/NostrWalletConnectPage';
 import Footer from './components/Footer';
 
 
@@ -154,6 +165,13 @@ class App extends Component {
           <Route path='/@:alias' component={ProfileFeed} />
         </div>
         <Route exact path='/courses' component={CourseViewerPage} />
+        <Route exact path='/courses/:courseId' component={CoursePage} />
+        <Route exact path='/courses/:courseId/module' component={CourseModule} />
+        <Route exact path='/courses/:courseId/lessons/:lessonId' component={CourseLesson} />
+        <Route exact path='/courses/:courseId/create-lesson' component={LessonCreator} />
+        <Route exact path='/courses/:courseId/badges' component={BadgeGallery} />
+        <Route exact path='/courses/:courseId/create-badge' component={BadgeCreator} />
+        <Route exact path='/courses/:courseId/award-badge' component={BadgeAwarder} />
         <Route exact path='/dashboard' component={DashboardPage} />
         <Route exact path='/dashboard/courses' component={DashboardPage} />
         <Route exact path='/dashboard/family-progress' component={DashboardPage} />
@@ -162,6 +180,12 @@ class App extends Component {
         <Route exact path='/dashboard/settings' component={DashboardPage} />
         <Route exact path='/dashboard/add-family' component={DashboardPage} />
         <Route exact path='/dashboard/create-course' component={DashboardPage} />
+        <Route exact path='/new-dashboard' component={Dashboard} />
+        <Route exact path='/badges' component={BadgeGallery} />
+        <Route exact path='/create-badge' component={BadgeCreator} />
+        <Route exact path='/award-badge' component={BadgeAwarder} />
+        <Route exact path='/my-badges' component={UserBadges} />
+        <Route exact path='/user/:pubkey/badges' component={UserBadges} />
         <Route exact path='/cdn' component={MediaHosting} />
         <Route exact path='/verify' component={ComingSoon} />
         <Route exact path='/theory' component={ComingSoon} />
@@ -169,9 +193,11 @@ class App extends Component {
         <Route exact path='/ui' component={ShadcnDemo} />
         <Route exact path='/about' component={AboutPage} />
         <Route exact path='/support' component={SupportPage} />
+        <Route exact path='/members' component={MembersOnlyPage} />
         <Route exact path='/privacy' component={AboutPage} />
         <Route exact path='/terms' component={AboutPage} />
         <Route exact path='/contact' component={SupportPage} />
+        <Route exact path='/wallet-connect' component={NostrWalletConnectPage} />
         {mobile ? <AliasMenuMobile /> : null}
         {this.props.sidePanelSection ? <SidePanel /> : null}
         {this.props.displayQR ? <QRDisplay /> : null}

@@ -1,0 +1,121 @@
+.lesson-viewer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lesson-viewer-loading {
+  text-align: center;
+  padding: 40px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lesson-header {
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+}
+
+.lesson-number {
+  display: inline-block;
+  background: #8B5CF6;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.lesson-title {
+  font-size: 28px;
+  color: #F59E0B;
+  margin: 10px 0;
+}
+
+.lesson-tags {
+  margin-top: 10px;
+}
+
+.lesson-tag {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.lesson-content {
+  line-height: 1.7;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.lesson-content h2 {
+  font-size: 24px;
+  color: #8B5CF6;
+  margin: 30px 0 15px;
+}
+
+.lesson-content h3 {
+  font-size: 20px;
+  color: #F59E0B;
+  margin: 25px 0 15px;
+}
+
+.lesson-content p {
+  margin-bottom: 20px;
+}
+
+.lesson-content ul, .lesson-content ol {
+  margin-bottom: 20px;
+  padding-left: 25px;
+}
+
+.lesson-content li {
+  margin-bottom: 10px;
+}
+
+.lesson-content code {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.lesson-content pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.lesson-content blockquote {
+  border-left: 4px solid #8B5CF6;
+  padding-left: 15px;
+  margin-left: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+.lesson-meta {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.lesson-pubkey {
+  font-family: monospace;
+  font-size: 12px;
+}

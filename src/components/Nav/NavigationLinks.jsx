@@ -66,6 +66,28 @@ export const PrimaryNavLinks = ({ mobile, activeRoute, onHover, hoverState }) =>
           {mobile ? null : "Identity Forge"}
         </div>
       </Link>
+      
+      <Link to="/badges" style={{ textDecoration: 'none' }}>
+        <div 
+          style={linkStyle('badges')}
+          onMouseOver={() => onHover('badges')}
+          onMouseOut={() => onHover('')}
+        >
+          <Icon name="certificate" style={{ marginRight: 5 }} />
+          {mobile ? null : "Badges"}
+        </div>
+      </Link>
+      
+      <Link to="/members" style={{ textDecoration: 'none' }}>
+        <div 
+          style={linkStyle('members')}
+          onMouseOver={() => onHover('members')}
+          onMouseOut={() => onHover('')}
+        >
+          <Icon name="lock" style={{ marginRight: 5 }} />
+          {mobile ? null : "Members' Only"}
+        </div>
+      </Link>
     </div>
   );
 };

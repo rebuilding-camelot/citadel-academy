@@ -1,4 +1,4 @@
-import { nip19 } from 'nostr-tools';
+import * as nip19 from 'nostr-tools/nip19';
 
 
 export const PROD = true;
@@ -14,11 +14,12 @@ export const DEFAULT_RELAYS = [
 	//'ws://localhost:3030'
 	'wss://relay.damus.io',
 	'wss://nos.lol',
-	'wss://relay.current.fyi',
-	'wss://relay.orangepill.dev',
-	'wss://relay.nostrplebs.com',
+	// Removing relays that are causing connection issues
+	// 'wss://relay.current.fyi',
+	// 'wss://relay.orangepill.dev',
+	// 'wss://relay.nostrplebs.com',
 	'wss://eden.nostr.land',
-	'wss://relay.plebstr.com',
+	// 'wss://relay.plebstr.com',
 	'wss://relay.nostr.band',
 	'wss://nostr.wine'
 ];

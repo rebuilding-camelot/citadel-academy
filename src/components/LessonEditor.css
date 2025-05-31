@@ -1,0 +1,213 @@
+.lesson-editor {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.editor-header h2 {
+  color: #F59E0B;
+  margin: 0;
+}
+
+.editor-tabs {
+  display: flex;
+}
+
+.editor-tab {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editor-tab:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.editor-tab:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.editor-tab.active {
+  background: #8B5CF6;
+  color: white;
+  border-color: #8B5CF6;
+}
+
+.editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input, .form-group textarea {
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 200px;
+  font-family: monospace;
+}
+
+.tag-input {
+  display: flex;
+  gap: 10px;
+}
+
+.tag-input input {
+  flex: 1;
+}
+
+.tag-input button {
+  background: #8B5CF6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 15px;
+  cursor: pointer;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.tag button {
+  background: none;
+  border: none;
+  color: #8B5CF6;
+  margin-left: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.save-button {
+  background: linear-gradient(135deg, #8B5CF6 0%, #F59E0B 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.save-button:hover {
+  transform: translateY(-2px);
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.preview-container {
+  padding: 20px 0;
+}
+
+.preview-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.preview-label {
+  background: #F59E0B;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.lesson-preview {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.lesson-preview h1 {
+  color: #F59E0B;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.preview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.preview-tag {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.preview-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+.preview-meta {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  text-align: right;
+}

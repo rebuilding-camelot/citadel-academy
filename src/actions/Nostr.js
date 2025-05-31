@@ -2,11 +2,14 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import { bech32 } from 'bech32';
 import { requestProvider } from 'webln';
-import { nip04, nip19, getPublicKey } from 'nostr-tools';
+import * as nip04 from 'nostr-tools/nip04';
+import * as nip19 from 'nostr-tools/nip19';
+import { getPublicKey } from 'nostr-tools/pure';
 import Feed from '../modules/Feed';
 
 import { DEFAULT_RELAYS, FEATURED_AUTHORS } from '../constants';
 import { navigate } from './Layout';
+import { verifyCitadelUser, isUserInWhitelist } from '../lib/nip05';
 
 
 // Try to get locally stored nostr private key
@@ -274,6 +277,60 @@ export const handleZapRequest = (recipient = {}, event = {}, params = {}) => {
 
 export const dismissZapRequest = () => {
 	return { type: SHOW_ZAP_REQUEST, data: null };
+};
+
+// NIP-05 verification actions
+export const VERIFY_NIP05_REQUEST = 'VERIFY_NIP05_REQUEST';
+export const VERIFY_NIP05_SUCCESS = 'VERIFY_NIP05_SUCCESS';
+export const VERIFY_NIP05_FAILURE = 'VERIFY_NIP05_FAILURE';
+
+/**
+ * Verifies a user's NIP-05 identifier and checks if they're in the membership whitelist
+ * 
+ * @param {string} identifier - The NIP-05 identifier (e.g., username@satnam.pub)
+ * @returns {Function} - Thunk action
+ */
+export const verifyNip05Identifier = (identifier) => {
+	return async (dispatch) => {
+		dispatch({ type: VERIFY_NIP05_REQUEST });
+		
+		try {
+			const user = await verifyCitadelUser(identifier);
+			
+			if (!user) {
+				dispatch({ 
+					type: VERIFY_NIP05_FAILURE, 
+					error: 'Failed to verify NIP-05 identifier' 
+				});
+				return null;
+			}
+			
+			// Check if the user is in the membership whitelist
+			const isInWhitelist = await isUserInWhitelist(user.pubkey);
+			
+			if (!isInWhitelist) {
+				dispatch({ 
+					type: VERIFY_NIP05_FAILURE, 
+					error: 'User not in membership whitelist' 
+				});
+				return null;
+			}
+			
+			dispatch({
+				type: VERIFY_NIP05_SUCCESS,
+				data: { user }
+			});
+			
+			return user;
+		} catch (error) {
+			console.error('NIP-05 verification error:', error);
+			dispatch({ 
+				type: VERIFY_NIP05_FAILURE, 
+				error: error.message || 'Unknown error during NIP-05 verification' 
+			});
+			return null;
+		}
+	};
 };
 
 // Create a 9734 event and send it to the ln server
@@ -704,18 +761,25 @@ export const loadActiveNostr = (callback) => { // load active address / alias
 	};
 };
 
+/**
+ * Connect to multiple Nostr relays
+ * 
+ * This function attempts to connect to a list of Nostr relays,
+ * with proper error handling for each connection attempt.
+ * 
+ * @param {Array<string>} relays - Array of relay URLs to connect to
+ * @param {Object} params - Additional parameters for the connection
+ * @param {boolean} params.maintain - Whether to maintain the connection
+ * @returns {void}
+ */
 export const connectToRelays = (relays, params = {}) => {
 
 	for (let url of relays) {
-
 		try {
-
-			// Connect to Satellite relay
+			// Connect to each relay using the client's connectToRelay method
 			window.client.connectToRelay({ url, ...params });
-
 		} catch (err) {
-
-			console.log(err);
+			console.error(`Failed to connect to relay ${url}:`, err);
 		}
 	}
 };
@@ -727,27 +791,41 @@ export const RELAY_CONNECTED = 'RELAY_CONNECTED';
 export const SHOW_NAV_ACTIONS = 'SHOW_NAV_ACTIONS';
 export const RECEIVE_COMMUNITY_POST_APPROVAL = 'RECEIVE_COMMUNITY_POST_APPROVAL';
 export const RECEIVE_COMMUNITY_FOLLOWING_LIST_COUNT = 'RECEIVE_COMMUNITY_FOLLOWING_LIST_COUNT';
-export const nostrMainInit = () => {
+/**
+ * Initialize the main Nostr client functionality
+ * 
+ * This action creator sets up the main Nostr client, connects to default relays,
+ * initializes the main feed, and dispatches it to the Redux store.
+ * 
+ * @param {Object} client - The Nostr client instance
+ * @returns {Function} - Redux thunk action
+ */
+export const nostrMainInit = (client) => {
 
 	return (dispatch, getState) => {
 
-		window.client.listenForRelayStatus((relay, status) => {
+		// Set up relay status listener to update Redux store with connection status
+		client.listenForRelayStatus((relay, status) => {
 
 			if (status.close) {
-
+				// Handle relay disconnection
 				dispatch({ type: RELAY_CLOSE, data: relay });
 
 			} else {
-
+				// Update relay status in the store
 				dispatch({ type: RELAY_STATUS, data: { relay, status } });
 			}
 
 		});
 
-		// Connect to default relays
+		// Connect to all default relays defined in constants.js
 		connectToRelays(DEFAULT_RELAYS, { maintain: true });
 
+		// Create the main feed for global content
 		const main = new Feed();
+		
+		// Dispatch the main feed to the Redux store to make it available throughout the app
+		dispatch({ type: NOSTR_MAIN_INIT, data: { main } });
 
 		main.listenForCommunityPostApproval(data => {
 			dispatch({ type: RECEIVE_COMMUNITY_POST_APPROVAL, data });

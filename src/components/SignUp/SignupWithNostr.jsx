@@ -3,7 +3,9 @@ import { Icon, Checkbox } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { nip19, getPublicKey, generatePrivateKey } from 'nostr-tools';
+import { nip19 } from 'nostr-tools';
+import { getPublicKey } from 'nostr-tools/pure';
+import { generateSecretKey } from 'nostr-tools';
 
 import { COLORS } from '../../constants';
 import { transition } from '../../helpers';
@@ -91,7 +93,7 @@ class SignupWithNostr extends Component {
 
 	regenerateSecretKey = () => {
 
-		const secretKeyHex = generatePrivateKey();
+		const secretKeyHex = generateSecretKey();
 		const secretKeyEncoded = nip19.nsecEncode(secretKeyHex);
 
 		this.setState({
