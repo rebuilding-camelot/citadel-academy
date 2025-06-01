@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNostrWalletConnect } from '../hooks/useNostrWalletConnect';
+import { useCitadelEventManager } from '../hooks/useCitadelEventManager';
 import QRCode from 'react-qr-code';
 import './NostrWalletConnect.css';
 
@@ -14,12 +15,20 @@ const NostrWalletConnect = () => {
     makeInvoice,
     getWalletInfo
   } = useNostrWalletConnect();
+  const { manager: eventManager, loading: eventManagerLoading } = useCitadelEventManager();
   const [connectionInput, setConnectionInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [invoice, setInvoice] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [generatedInvoice, setGeneratedInvoice] = useState('');
+  
+  useEffect(() => {
+    // Log when event manager is ready
+    if (eventManager && connected) {
+      console.log('CitadelEventManager initialized and ready for use');
+    }
+  }, [eventManager, connected]);
 
   const handleConnect = async () => {
     setLoading(true);

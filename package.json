@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nostr-dev-kit/ndk": "^2.14.24",
@@ -21,7 +23,6 @@
     "dompurify": "^3.0.3",
     "express": "^4.17.1",
     "history": "4.9.0",
-    "jsdom": "^16.4.0",
     "lucide-react": "^0.511.0",
     "marked": "0.6.2",
     "nostr-tools": "^2.13.1",
@@ -43,16 +44,19 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.8",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.21",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.4",
     "redux-logger": "^3.0.6",
     "tailwindcss": "^4.1.8",
     "typescript": "^5.8.3",
     "vite": "^4.2.0",
     "vite-plugin-pwa": "^0.16.4",
+    "vitest": "^1.6.1",
     "workbox-window": "^7.0.0"
   }
 }

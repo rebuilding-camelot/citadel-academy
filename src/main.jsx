@@ -12,6 +12,7 @@ import './background-fix.css'
 import './citadel-theme.css'
 import './white-text-theme.css'
 import './branding.css'
+import './styles/academystore-library.css'
 
 const Store = store();
 

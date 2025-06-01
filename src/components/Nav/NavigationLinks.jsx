@@ -78,6 +78,17 @@ export const PrimaryNavLinks = ({ mobile, activeRoute, onHover, hoverState }) =>
         </div>
       </Link>
       
+      <Link to="/academystore" style={{ textDecoration: 'none' }}>
+        <div 
+          style={linkStyle('academystore')}
+          onMouseOver={() => onHover('academystore')}
+          onMouseOut={() => onHover('')}
+        >
+          <Icon name="shopping basket" style={{ marginRight: 5 }} />
+          {mobile ? null : "Academy Store"}
+        </div>
+      </Link>
+      
       <Link to="/members" style={{ textDecoration: 'none' }}>
         <div 
           style={linkStyle('members')}

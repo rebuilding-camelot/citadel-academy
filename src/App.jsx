@@ -47,6 +47,7 @@ import AboutPage from './components/AboutPage';
 import SupportPage from './components/SupportPage';
 import MembersOnlyPage from './components/MembersOnlyPage';
 import NostrWalletConnectPage from './components/NostrWalletConnectPage';
+import AcademyStore from './components/AcademyStore';
 import Footer from './components/Footer';
 
 
@@ -198,6 +199,10 @@ class App extends Component {
         <Route exact path='/terms' component={AboutPage} />
         <Route exact path='/contact' component={SupportPage} />
         <Route exact path='/wallet-connect' component={NostrWalletConnectPage} />
+        <Route exact path='/academystore' component={AcademyStore} />
+        <Route exact path='/academystore/marketplace' component={AcademyStore} />
+        <Route exact path='/academystore/library' component={AcademyStore} />
+        <Route exact path='/academystore/product/:productId' component={AcademyStore} />
         {mobile ? <AliasMenuMobile /> : null}
         {this.props.sidePanelSection ? <SidePanel /> : null}
         {this.props.displayQR ? <QRDisplay /> : null}

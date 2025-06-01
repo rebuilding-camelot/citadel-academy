@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa';
+import { configDefaults } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,5 +29,11 @@ export default defineConfig({
     scope: '/',
     start_url: '/',
     orientation: 'portrait'
-  })]
+  })],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    exclude: [...configDefaults.exclude, 'e2e/*'],
+    setupFiles: ['./tests/setup.ts']
+  }
 });

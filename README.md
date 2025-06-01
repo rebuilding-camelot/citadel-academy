@@ -53,6 +53,11 @@ npm run dev
 - Implemented proper parameter handling in nostrMainInit function
 - Added exponential backoff for relay reconnection attempts
 - Improved error handling in event publishing
+- Migrated core functionality to TypeScript for better type safety
+- Added CourseSearch component with NIP-50 search implementation
+- Created AcademyStore and LivingryLibrary components
+- Implemented unified event manager for better Nostr event handling
+- Added TypeScript configuration and type definitions
 
 ## 🔌 Implemented NIPs (Nostr Implementation Possibilities)
 
@@ -67,6 +72,7 @@ npm run dev
 | [NIP-19](https://github.com/nostr-protocol/nips/blob/master/19.md) | bech32-encoded entities | User-friendly identifiers |
 | [NIP-25](https://github.com/nostr-protocol/nips/blob/master/25.md) | Reactions | Content engagement |
 | [NIP-42](https://github.com/nostr-protocol/nips/blob/master/42.md) | Authentication | User login |
+| [NIP-50](https://github.com/nostr-protocol/nips/blob/master/50.md) | Search | Course discovery |
 | [NIP-57](https://github.com/nostr-protocol/nips/blob/master/57.md) | Lightning Zaps | Payments |
 | [NIP-58](https://github.com/nostr-protocol/nips/blob/master/58.md) | Badges | Educational credentials |
 
@@ -97,6 +103,7 @@ npm run dev
 - [x] Course catalog browser
 - [x] Basic badge issuance
 - [x] Family group creation
+- [x] NIP-50 search functionality for course discovery
 
 ### In Development
 - [ ] Live video classrooms
@@ -132,16 +139,36 @@ citadel-academy/
 │   │   ├── Nostr.js    # Nostr-related actions
 │   │   └── ...
 │   ├── components/     # React components
+│   │   ├── CourseSearch.tsx  # NIP-50 search component
+│   │   ├── AcademyStore.tsx  # Marketplace component
+│   │   ├── LivingryLibrary.tsx # Library component
+│   │   └── ...
+│   ├── hooks/          # Custom React hooks
+│   │   ├── useCitadelEventManager.ts # Event management hook
+│   │   ├── useNostrWalletConnect.d.ts # Type definitions
+│   │   └── ...
+│   ├── lib/            # Utility libraries
+│   │   ├── search.ts   # NIP-50 search implementation
+│   │   ├── nostrUtils.ts # Nostr utility functions
+│   │   ├── unified-event-manager.ts # Event handling
+│   │   ├── marketplace.ts # Store functionality
+│   │   └── ...
 │   ├── modules/        # Core functionality modules
 │   │   ├── Client.js   # Nostr client implementation
 │   │   └── Feed.js     # Feed management
 │   ├── reducers/       # Redux reducers
 │   │   ├── nostr.js    # Nostr state management
 │   │   └── ...
+│   ├── styles/         # CSS modules and styles
+│   ├── types/          # TypeScript type definitions
 │   ├── App.jsx         # Main application component
 │   ├── constants.js    # Application constants (relays, colors, etc.)
 │   ├── main.jsx        # Application entry point
-│   └── store.js        # Redux store configuration
+│   ├── store.js        # Redux store configuration
+│   └── types.d.ts      # Global type definitions
+├── tests/              # Test files
+├── tsconfig.json       # TypeScript configuration
+├── tsconfig.node.json  # Node-specific TS config
 └── package.json        # Project dependencies
 ```
 
@@ -172,6 +199,23 @@ npm run preview
    - Added comprehensive error handling in event publishing
    - Improved reconnection logic with maximum attempt limits
    - Better logging for debugging connection issues
+
+4. **NIP-50 Search Implementation**
+   - Added support for full-text search of courses
+   - Implemented filtering by tags, course level, and instructor
+   - Created responsive CourseSearch component for discovery
+
+5. **TypeScript Migration**
+   - Added TypeScript configuration and type definitions
+   - Migrated key utility functions to TypeScript
+   - Implemented type-safe components for new features
+   - Created proper type interfaces for Nostr events and data
+
+6. **Unified Event Management**
+   - Developed a centralized event manager for Nostr interactions
+   - Created custom hooks for simplified component integration
+   - Improved event subscription and publishing patterns
+   - Better handling of event lifecycles
 
 ## 🤝 Contributing
 

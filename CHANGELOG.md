@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive documentation of implemented NIPs in README
 - Detailed project structure documentation
 - JSDoc comments for key functions
+- Implemented NIP-50 search functionality for course discovery
+- Added CourseSearch component for searching courses
 
 ### Fixed
 - Fixed client initialization in Redux store by properly passing client parameter to nostrMainInit
