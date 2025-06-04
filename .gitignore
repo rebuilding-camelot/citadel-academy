@@ -34,6 +34,12 @@ dist-ssr
 # Build files
 /build
 
+# Compiled JavaScript from TypeScript
+src/**/*.js
+src/**/*.jsx
+src/**/*.js.map
+src/**/*.jsx.map
+
 # Temporary files
 .tmp
 .temp
