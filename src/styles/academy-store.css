@@ -1,0 +1,273 @@
+.academy-store {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+.store-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, #8B5CF6 0%, #F59E0B 100%);
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+}
+
+.store-header h1 {
+  margin: 0 0 12px 0;
+  font-family: 'Kingvoon', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.store-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.95;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+.store-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  background: white;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.store-tab {
+  flex: 1;
+  max-width: 200px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.store-tab.active {
+  background: linear-gradient(135deg, #8B5CF6 0%, #F59E0B 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.25);
+}
+
+.store-tab:hover:not(.active) {
+  background: #f3f4f6;
+}
+
+.store-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Existing store tabs styling */
+.store-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 16px;
+}
+
+.store-tabs button {
+  padding: 8px 16px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.store-tabs button.active {
+  background: #8B5CF6;
+  color: white;
+}
+
+.store-tabs button:hover:not(.active) {
+  background: #e5e7eb;
+}
+
+/* Book grid styling */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.book-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.book-card h3 {
+  margin: 16px 16px 8px;
+  font-size: 1.1rem;
+  color: #1f2937;
+}
+
+.book-card p {
+  margin: 0 16px 8px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.book-card .price {
+  margin: 8px 16px;
+  font-weight: 700;
+  color: #F59E0B;
+  font-size: 1.1rem;
+}
+
+.book-actions {
+  margin: 16px;
+  margin-top: auto;
+}
+
+.purchase-btn, .access-btn {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.purchase-btn {
+  background: linear-gradient(135deg, #8B5CF6 0%, #F59E0B 100%);
+  color: white;
+}
+
+.purchase-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.access-btn {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.access-btn:hover {
+  background: #e5e7eb;
+}
+
+.purchased-indicator {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #10B981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.progress-indicator {
+  margin: 8px 16px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #8B5CF6, #F59E0B);
+  border-radius: 4px;
+}
+
+.progress-indicator span {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #6b7280;
+}
+
+.connect-wallet-message {
+  text-align: center;
+  padding: 16px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .store-navigation {
+    flex-direction: column;
+    padding: 8px;
+  }
+  
+  .store-tab {
+    max-width: none;
+  }
+  
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .store-header h1 {
+    font-size: 2rem;
+  }
+}

@@ -6,6 +6,11 @@ import { configDefaults } from 'vitest/config';
 // https://vitejs.dev/config/
 export default defineConfig({
   //base: './',
+  css: {
+    modules: {
+      localsConvention: 'camelCase'
+    }
+  },
   plugins: [react(), VitePWA({
     registerType: 'prompt',
     selfDestroying: true,
@@ -35,5 +40,12 @@ export default defineConfig({
     environment: 'jsdom',
     exclude: [...configDefaults.exclude, 'e2e/*'],
     setupFiles: ['./tests/setup.ts']
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx'
+      }
+    }
   }
 });

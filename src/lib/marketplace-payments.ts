@@ -3,7 +3,7 @@
 import { Event } from 'nostr-tools';
 import { CoursePayment } from './lightning';
 import { createPurchaseOrder, publishEvent } from './marketplace';
-import { updatePurchaseHistory } from './enhanced-progress';
+import { updatePurchaseHistory } from './progress';
 // Import the hook type for TypeScript support
 import type { useNostrWalletConnect as UseNostrWalletConnectType } from '../hooks/useNostrWalletConnect';
 

@@ -19,7 +19,7 @@ A Nostr-native educational ecosystem empowering families to own their learning j
 Citadel Academy transforms education from institutional control to family sovereignty. Built on Nostr's decentralized infrastructure, we enable:
 
 - **🎓 Self-Sovereign Learning**: Own your educational records forever
-- **👨‍👩‍👧‍👦 Family-First Design**: Multi-generational knowledge preservation
+- **👨‍👩‍👧‍👦 Family-First Design**: Collaborative learning environment
 - **🏅 Verifiable Credentials**: NIP-58 badges that can't be censored or revoked
 - **⚡ Bitcoin-Native**: Lightning payments for premium content and mentorship
 
@@ -59,19 +59,34 @@ npm run dev
 - Implemented unified event manager for better Nostr event handling
 - Added TypeScript configuration and type definitions
 - Implemented NIP-53 live streaming events for video classrooms
+- Implemented Mentor Marketplace with atomic swaps for digital content purchases
+- Enhanced atomic swap functionality for trustless content exchange
 - Refactored backup system with improved code organization:
   - Created centralized crypto utilities
   - Improved documentation with JSDoc comments
   - Removed duplicate code and redundant functions
   - Enhanced error handling in backup operations
   - Added configurable backup targets and relay settings
-- Simplified and cleaned Knowledge Vault components:
+- Simplified and cleaned components:
   - Added comprehensive JSDoc comments for better code documentation
   - Improved component organization with logical grouping
-  - Enhanced error handling in file operations
-  - Optimized IPFS service with cleaner interfaces
+  - Enhanced error handling in operations
   - Removed redundant code and simplified component logic
   - Improved readability with better variable names and comments
+- Cleaned up project structure:
+  - Removed duplicate directories and files
+  - Consolidated component files into src/components
+  - Standardized on TypeScript for new development
+  - Organized styles into src/styles directory
+  - Removed redundant JavaScript files where TypeScript versions exist
+- Simplified Knowledge Vault components:
+  - Improved file upload and management
+  - Enhanced user interface for better usability
+  - Added better error handling and progress indicators
+- Implemented secure credential management:
+  - Added TypeScript support for credential management
+  - Improved encryption for sensitive data
+  - Created initialization scripts for development and production
 
 ## 🔌 Implemented NIPs (Nostr Implementation Possibilities)
 
@@ -90,6 +105,8 @@ npm run dev
 | [NIP-53](https://github.com/nostr-protocol/nips/blob/master/53.md) | Live Events | Video classrooms |
 | [NIP-57](https://github.com/nostr-protocol/nips/blob/master/57.md) | Lightning Zaps | Payments |
 | [NIP-58](https://github.com/nostr-protocol/nips/blob/master/58.md) | Badges | Educational credentials |
+| [NIP-72](https://github.com/nostr-protocol/nips/blob/master/72.md) | Moderated Communities | Learning groups |
+| [NIP-2312](https://github.com/nostr-protocol/nips/blob/master/2312.md) | Commerce Events | Atomic swaps |
 
 ## 🏗️ Built With
 
@@ -101,10 +118,10 @@ npm run dev
 ### Educational Features
 - **[My First Bitcoin](https://github.com/MyFirstBitcoin)** - Open-source Bitcoin curriculum
 - **NIP-58 Badges** - Decentralized credential system
-- **Family Vaults** - Encrypted knowledge preservation
 
 ### Payment & Automation
 - **Lightning Network** - Instant micropayments for courses and between peers
+- **Atomic Swaps** - Trustless content purchases using Lightning Network
 - **Fedimint** - Family treasury management
 - **zap.stream** - Live classroom integration
 - **vida.live** - AI integrated voice tutors and fiat on-ramp
@@ -119,12 +136,13 @@ npm run dev
 - [x] Basic badge issuance
 - [x] Family group creation
 - [x] NIP-50 search functionality for course discovery
+- [x] Atomic swaps for content purchases
 
 ### In Development
 - [x] Live video classrooms
-- [ ] Mentor marketplace
-- [x] Knowledge vault (IPFS storage)
+- [x] Mentor marketplace
 - [ ] Mobile app (React Native)
+- [x] Lightning Network payment integration
 
 ### Planned
 - [ ] AI tutoring assistants
@@ -136,10 +154,10 @@ npm run dev
 
 ## 👥 For Families
 
-**Parents**: Create learning pathways, track progress, issue verified credentials
-**Students**: Earn badges, join study groups, build your sovereign identity
-**Grandparents**: Share wisdom, mentor grandchildren, preserve family history
-**Educators**: Monetize expertise, reach global families, maintain academic freedom
+**Parents**: Create learning pathways, track progress, issue verified credentials, find trusted mentors
+**Students**: Earn badges, join study groups, build your sovereign identity, access quality educational content
+**Grandparents**: Share wisdom, mentor grandchildren, contribute to family learning legacy
+**Educators**: Monetize expertise through the Mentor Marketplace, sell digital content with atomic swaps, reach global families, maintain academic freedom
 
 ---
 
@@ -157,6 +175,9 @@ citadel-academy/
 │   │   ├── CourseSearch.tsx  # NIP-50 search component
 │   │   ├── AcademyStore.tsx  # Marketplace component
 │   │   ├── LivingryLibrary.tsx # Library component
+│   │   ├── MentorMarketplace.tsx # Mentor marketplace component
+│   │   ├── AtomicSwap.tsx    # Atomic swap component
+│   │   ├── ContentPurchase.tsx # Content purchase component
 │   │   └── ...
 │   ├── hooks/          # Custom React hooks
 │   │   ├── useCitadelEventManager.ts # Event management hook
@@ -167,12 +188,14 @@ citadel-academy/
 │   │   ├── nostrUtils.ts # Nostr utility functions
 │   │   ├── unified-event-manager.ts # Event handling
 │   │   ├── marketplace.ts # Store functionality
+│   │   ├── mentor-marketplace.ts # Mentor marketplace functionality
 │   │   ├── nip53-live-events.ts # NIP-53 live streaming events
 │   │   ├── crypto-utils.ts # Cryptographic utilities
 │   │   ├── citadel-backup-sdk.ts # Unified backup SDK
 │   │   ├── private-relay-manager.ts # Private relay management
 │   │   ├── encrypted-backup-manager.ts # Encrypted backup system
 │   │   ├── strfry-backup-integration.ts # Strfry relay integration
+│   │   ├── atomic-swap.ts # Atomic swap service
 │   │   └── ...
 │   ├── modules/        # Core functionality modules
 │   │   ├── Client.js   # Nostr client implementation
@@ -181,12 +204,26 @@ citadel-academy/
 │   │   ├── nostr.js    # Nostr state management
 │   │   └── ...
 │   ├── styles/         # CSS modules and styles
+│   │   ├── atomic-swap.css # Atomic swap styles
+│   │   └── ...
 │   ├── types/          # TypeScript type definitions
 │   ├── App.jsx         # Main application component
 │   ├── constants.js    # Application constants (relays, colors, etc.)
 │   ├── main.jsx        # Application entry point
 │   ├── store.js        # Redux store configuration
 │   └── types.d.ts      # Global type definitions
+├── pages/              # Next.js pages
+│   ├── api/            # API routes
+│   │   ├── create-swap.ts # Create atomic swap API
+│   │   ├── check-swap.ts # Check swap status API
+│   │   ├── mentor/      # Mentor marketplace APIs
+│   │   │   ├── profile.ts # Mentor profile API
+│   │   │   ├── content.ts # Mentor content API
+│   │   │   └── reviews.ts # Mentor reviews API
+│   │   └── ...
+│   ├── atomic-swap-demo.tsx # Demo page for atomic swaps
+│   ├── mentor-marketplace.tsx # Mentor marketplace page
+│   └── ...
 ├── tests/              # Test files
 ├── tsconfig.json       # TypeScript configuration
 ├── tsconfig.node.json  # Node-specific TS config
@@ -251,6 +288,14 @@ npm run preview
    - Enhanced error handling with proper TypeScript typing
    - Improved timeout handling in network operations
    - Added verification capabilities for backup integrity
+
+9. **Mentor Marketplace Implementation**
+   - Developed complete Mentor Marketplace with profile creation and discovery
+   - Implemented NIP-2312 atomic swaps for trustless digital content purchases
+   - Created secure payment flow for educational content and mentorship services
+   - Added rating and review system for mentors and educational materials
+   - Integrated with Lightning Network for instant micropayments
+   - Implemented content preview and sample functionality
 
 ## 🤝 Contributing
 

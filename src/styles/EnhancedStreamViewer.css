@@ -1,0 +1,220 @@
+/* File: styles/EnhancedStreamViewer.css */
+/* Styles for the enhanced stream viewer with screen sharing and teacher controls */
+
+.enhanced-stream-viewer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.enhanced-stream-viewer .stream-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #333;
+}
+
+.enhanced-stream-viewer .stream-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.enhanced-stream-viewer .view-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.enhanced-stream-viewer .view-controls button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.enhanced-stream-viewer .view-controls button:hover {
+  background-color: #444;
+}
+
+.enhanced-stream-viewer .view-controls button.active {
+  background-color: #f59f00;
+  color: #000;
+}
+
+.enhanced-stream-viewer .stream-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.enhanced-stream-viewer .video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+}
+
+.enhanced-stream-viewer .stream-video {
+  width: 100%;
+  height: 100%;
+}
+
+.enhanced-stream-viewer .stream-video.screen {
+  object-fit: contain;
+}
+
+.enhanced-stream-viewer .stream-video.camera {
+  object-fit: cover;
+}
+
+.enhanced-stream-viewer .stream-video.pip {
+  object-fit: contain;
+}
+
+.enhanced-stream-viewer .stream-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.enhanced-stream-viewer .teacher-controls {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background-color: #2a2a2a;
+  border-top: 1px solid #333;
+}
+
+.enhanced-stream-viewer .teacher-controls button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.enhanced-stream-viewer .teacher-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.enhanced-stream-viewer .nostr-warning {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.enhanced-stream-viewer .screen-share-btn {
+  background-color: #2b5797;
+  color: white;
+}
+
+.enhanced-stream-viewer .screen-share-btn:hover {
+  background-color: #3a6db5;
+}
+
+.enhanced-stream-viewer .screen-share-btn.active {
+  background-color: #d32f2f;
+}
+
+.enhanced-stream-viewer .screen-share-btn.active:hover {
+  background-color: #e33e3e;
+}
+
+.enhanced-stream-viewer .annotation-btn {
+  background-color: #388e3c;
+  color: white;
+}
+
+.enhanced-stream-viewer .annotation-btn:hover {
+  background-color: #4caf50;
+}
+
+.enhanced-stream-viewer .annotation {
+  position: absolute;
+  background: rgba(255, 255, 0, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 10;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.annotation-input-container {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.annotation-input {
+  background-color: white;
+  color: #333;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 220px;
+  max-width: 90vw;
+}
+
+.annotation-input:focus {
+  outline: none;
+  border-color: #2980b9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .enhanced-stream-viewer .stream-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .enhanced-stream-viewer .view-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .enhanced-stream-viewer .teacher-controls {
+    flex-direction: column;
+  }
+}

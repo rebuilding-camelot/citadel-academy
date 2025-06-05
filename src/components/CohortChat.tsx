@@ -155,13 +155,4 @@ export function CohortChat({ cohortId, userPrivateKey }: CohortChatProps) {
   );
 }
 
-// Add TypeScript declarations for client extensions
-declare global {
-  interface Window {
-    client: {
-      getPublicKey: (privateKey: string) => string;
-      publishEvent: (event: Event, callback: (status: string, relay: any) => void) => void;
-      subscribe: (relays: string[], filters: any[]) => any;
-    };
-  }
-}
+// Window interface is defined in src/types/window.d.ts

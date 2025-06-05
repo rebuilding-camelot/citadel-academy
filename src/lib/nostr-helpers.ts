@@ -3,6 +3,15 @@
 import { SimplePool } from 'nostr-tools';
 import type { Event, Filter } from 'nostr-tools';
 
+// Helper function to convert hex string to Uint8Array
+export function hexToBytes(hex: string): Uint8Array {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
+  }
+  return bytes;
+}
+
 export class CitadelNostrClient {
   private pool: SimplePool = new SimplePool();
   private defaultRelays = [

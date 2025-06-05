@@ -1,0 +1,195 @@
+/* File: styles/enhanced-stream.css */
+/* Enhanced Stream Viewer Styles */
+.stream-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.stream-video-wrapper.has-screen-share .stream-video {
+  width: 100%;
+  height: 100%;
+}
+
+.stream-controls {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 10;
+}
+
+.stream-type-indicator {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.annotation-toggle {
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stream-features {
+  margin-top: 10px;
+  font-style: italic;
+  color: #6c757d;
+}
+
+/* Stream type specific styles */
+.stream-video.both {
+  object-fit: contain;
+}
+
+.stream-video.screen {
+  object-fit: contain;
+}
+
+.stream-video.camera {
+  object-fit: cover;
+}
+.enhanced-stream-creator {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.stream-type-selector {
+  margin: 20px 0;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.radio-group label:hover {
+  background-color: #f5f5f5;
+}
+.radio-group input[type="radio"]:checked + label,
+.radio-group label:has(input[type="radio"]:checked) {
+  background-color: #8B5CF6;
+  color: white;
+  border-color: #8B5CF6;
+}
+.stream-preview {
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.view-controls {
+  display: flex;
+  gap: 10px;
+}
+.view-controls button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.view-controls button.active {
+  background: #8B5CF6;
+  color: white;
+  border-color: #8B5CF6;
+}
+.video-container {
+  position: relative;
+  background: black;
+  min-height: 400px;
+  cursor: crosshair;
+}
+.stream-video.screen {
+  object-fit: contain;
+}
+.stream-video.camera {
+  object-fit: cover;
+}
+.stream-video.pip {
+  object-fit: contain;
+}
+
+.pip-video {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.pip-video:hover {
+  transform: scale(1.05);
+}
+.teacher-controls {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+}
+.screen-share-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.screen-share-btn.active {
+  background: #dc3545;
+}
+.screen-share-btn:hover {
+  opacity: 0.9;
+}
+.annotation-btn {
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.annotation {
+  animation: fadeInOut 10s ease-in-out;
+}
+@keyframes fadeInOut {
+  0%, 90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .view-controls {
+    flex-direction: column;
+  }
+  
+  .teacher-controls {
+    flex-direction: column;
+  }
+  
+  .radio-group {
+    gap: 5px;
+  }
+}

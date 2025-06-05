@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Event } from 'nostr-tools';
 import { fetchLibraryFiles } from '../lib/library';
-import { getStudentProgress, trackFileInteraction, LibraryInteraction } from '../lib/enhanced-progress';
+import { getStudentProgress, trackFileInteraction, LibraryInteraction } from '../lib/progress';
 import { fetchPurchaseOrders } from '../lib/marketplace';
 import './LivingryLibrary.css';
 import '../styles/academystore-library.css';

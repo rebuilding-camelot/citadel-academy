@@ -154,34 +154,30 @@ div[class*="Zoom"] {
   border-bottom: 1px solid #ffa500 !important;
 }
 
-button,
-.ui.button,
-.button {
-  background-color: #ffa500 !important;
-  color: white !important;
-}
+/* Button styling removed to allow component-level control */
 
-/* Force text color */
-body,
-#root,
-.text,
-.content,
-.description,
-.header,
-.title,
-.meta,
-.extra,
-.item,
-.menu .item,
-.dropdown .item,
-.list .item,
-.card .content,
-.card .header,
-.card .meta,
-.card .description,
-.card .extra,
-h1, h2, h3, h4, h5, h6,
-p, span, div, a {
+/* Force text color except for elements with inline styles */
+body:not([style*="color"]),
+#root:not([style*="color"]),
+.text:not([style*="color"]),
+.content:not([style*="color"]),
+.description:not([style*="color"]),
+.header:not([style*="color"]),
+.title:not([style*="color"]),
+.meta:not([style*="color"]),
+.extra:not([style*="color"]),
+.item:not([style*="color"]),
+.menu .item:not([style*="color"]),
+.dropdown .item:not([style*="color"]),
+.list .item:not([style*="color"]),
+.card .content:not([style*="color"]),
+.card .header:not([style*="color"]),
+.card .meta:not([style*="color"]),
+.card .description:not([style*="color"]),
+.card .extra:not([style*="color"]),
+h1:not([style*="color"]), h2:not([style*="color"]), h3:not([style*="color"]), 
+h4:not([style*="color"]), h5:not([style*="color"]), h6:not([style*="color"]),
+p:not([style*="color"]), span:not([style*="color"]), div:not([style*="color"]), a:not([style*="color"]) {
   color: white !important;
 }
 

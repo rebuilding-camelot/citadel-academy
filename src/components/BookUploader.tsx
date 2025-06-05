@@ -66,7 +66,7 @@ export function BookUploader() {
     
     try {
       // Upload the file to a storage service
-      // In a real implementation, this would upload to IPFS, Arweave, or another storage service
+      // In a real implementation, this would upload to a decentralized storage service
       const fileUrl = URL.createObjectURL(upload.file);
       
       // Calculate file hash for verification

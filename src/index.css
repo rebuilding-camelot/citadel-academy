@@ -107,11 +107,7 @@ html {
   color: white !important;
 }
 
-/* Make sure buttons are visible */
-button, .ui.button {
-  background-color: #0053a0 !important;
-  color: white !important;
-}
+/* Button styling removed to allow component-level control */
 
 /* Make sure text is visible on light purple background */
 .text-content {

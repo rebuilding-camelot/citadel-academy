@@ -5,12 +5,12 @@ import { fetchBookListings } from '../lib/marketplace';
 import { useNostrWalletConnect } from '../hooks/useNostrWalletConnect';
 import { nostrClient } from '../lib/nostr-helpers';
 import { purchaseMarketplaceItem } from '../lib/marketplace-payments';
-import { trackFileInteraction } from '../lib/enhanced-progress';
-import { getStudentProgress } from '../lib/enhanced-progress';
+import { trackFileInteraction, getStudentProgress } from '../lib/progress';
 import { fetchPurchaseOrders } from '../lib/marketplace';
 import { fetchLibraryFiles } from '../lib/library';
 import { useCitadelEventManager } from '../hooks/useCitadelEventManager';
-import './AcademyStore.css';
+import { MentorMarketplaceComponent } from './MentorMarketplace';
+import '../styles/academy-store.css';
 import '../styles/academystore-library.css';
 import '../styles/unified-bookstore.css';
 
@@ -39,6 +39,7 @@ function AcademyStore() {
   const [activeTab, setActiveTab] = useState<string>('marketplace');
   const [userProgress, setUserProgress] = useState<Map<string, number>>(new Map());
   const [purchaseHistory, setPurchaseHistory] = useState<string[]>([]);
+  const [mainView, setMainView] = useState<'books' | 'mentors'>('books');
   const { connected, payInvoice, walletPubkey } = useNostrWalletConnect();
   const { purchaseProduct, loading: eventManagerLoading, error: eventManagerError } = useCitadelEventManager();
 
@@ -162,117 +163,144 @@ function AcademyStore() {
   }
 
   return (
-    <div className="unified-bookstore">
-      <h1>📚 Citadel Academy Store & Library</h1>
+    <div className="academy-store">
+      <div className="store-header">
+        <h1>🏪 Citadel Academy Store</h1>
+        <p>Books, courses, and expert mentorship for your Bitcoin journey</p>
+      </div>
       
-      <div className="store-tabs">
+      <div className="store-navigation">
         <button 
-          className={activeTab === 'marketplace' ? 'active' : ''} 
-          onClick={() => setActiveTab('marketplace')}
+          className={`store-tab ${mainView === 'books' ? 'active' : ''}`}
+          onClick={() => setMainView('books')}
         >
-          Marketplace
+          📚 Books & Courses
         </button>
         <button 
-          className={activeTab === 'library' ? 'active' : ''} 
-          onClick={() => setActiveTab('library')}
+          className={`store-tab ${mainView === 'mentors' ? 'active' : ''}`}
+          onClick={() => setMainView('mentors')}
         >
-          My Library
-        </button>
-        <button 
-          className={activeTab === 'progress' ? 'active' : ''} 
-          onClick={() => setActiveTab('progress')}
-        >
-          Progress
+          🎓 Mentor Sessions
         </button>
       </div>
 
-      {!connected && (
-        <div className="connect-wallet-message">
-          Please connect your Nostr wallet to access all features
-        </div>
-      )}
-      
-      <div className="book-grid">
-        {books.map(book => {
-          const title = book.tags.find(tag => tag[0] === 'title')?.[1];
-          const price = book.tags.find(tag => tag[0] === 'price')?.[1];
-          const author = book.tags.find(tag => tag[0] === 'author')?.[1];
-          const image = book.tags.find(tag => tag[0] === 'image')?.[1];
-          const accessLevel = book.tags.find(tag => tag[0] === 'access')?.[1];
-          
-          const progress = userProgress.get(book.id) || 0;
-          const isPurchased = purchaseHistory.includes(book.id);
-          const isFree = accessLevel === 'free' || parseInt(price || '0') === 0;
-          
-          // Only show purchased items in library tab
-          if (activeTab === 'library' && !isPurchased && !isFree) {
-            return null;
-          }
-
-          // Only show items with progress in progress tab
-          if (activeTab === 'progress' && progress === 0) {
-            return null;
-          }
-          
-          return (
-            <div key={book.id} className="book-card">
-              {isPurchased && <div className="purchased-indicator">Purchased</div>}
-              <img src={image} alt={title} className="book-cover" />
-              <h3>{title}</h3>
-              <p>by {author}</p>
-              
-              {activeTab !== 'marketplace' && progress > 0 && (
-                <div className="progress-indicator">
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                  <span>{progress}% complete</span>
-                </div>
-              )}
-              
-              {activeTab === 'marketplace' && (
-                <p className="price">{parseInt(price || '0').toLocaleString()} sats</p>
-              )}
-              
-              <div className="book-actions">
-                {isFree || isPurchased ? (
-                  <button 
-                    onClick={() => openFile(book)}
-                    className="access-btn"
-                  >
-                    📖 {isPurchased ? 'Read' : 'Access'}
-                  </button>
-                ) : (
-                  <button 
-                    onClick={() => purchaseBook(book)}
-                    className="purchase-btn"
-                    disabled={!connected}
-                  >
-                    ⚡ Buy Now
-                  </button>
-                )}
-              </div>
+      <div className="store-content">
+        {mainView === 'mentors' ? (
+          <MentorMarketplaceComponent />
+        ) : (
+          <>
+            <div className="store-tabs">
+              <button 
+                className={activeTab === 'marketplace' ? 'active' : ''} 
+                onClick={() => setActiveTab('marketplace')}
+              >
+                Marketplace
+              </button>
+              <button 
+                className={activeTab === 'library' ? 'active' : ''} 
+                onClick={() => setActiveTab('library')}
+              >
+                My Library
+              </button>
+              <button 
+                className={activeTab === 'progress' ? 'active' : ''} 
+                onClick={() => setActiveTab('progress')}
+              >
+                Progress
+              </button>
             </div>
-          );
-        })}
 
-        {activeTab === 'library' && purchaseHistory.length === 0 && (
-          <div className="empty-state">
-            <p>Your library is empty. Purchase books from the marketplace to see them here.</p>
-          </div>
-        )}
+            {!connected && (
+              <div className="connect-wallet-message">
+                Please connect your Nostr wallet to access all features
+              </div>
+            )}
+            
+            <div className="book-grid">
+              {books.map(book => {
+            const title = book.tags.find(tag => tag[0] === 'title')?.[1];
+            const price = book.tags.find(tag => tag[0] === 'price')?.[1];
+            const author = book.tags.find(tag => tag[0] === 'author')?.[1];
+            const image = book.tags.find(tag => tag[0] === 'image')?.[1];
+            const accessLevel = book.tags.find(tag => tag[0] === 'access')?.[1];
+            
+            const progress = userProgress.get(book.id) || 0;
+            const isPurchased = purchaseHistory.includes(book.id);
+            const isFree = accessLevel === 'free' || parseInt(price || '0') === 0;
+            
+            // Only show purchased items in library tab
+            if (activeTab === 'library' && !isPurchased && !isFree) {
+              return null;
+            }
 
-        {activeTab === 'progress' && ![...userProgress.values()].some(progress => progress > 0) && (
-          <div className="empty-state">
-            <p>No progress data available. Start reading books to track your progress.</p>
-          </div>
+            // Only show items with progress in progress tab
+            if (activeTab === 'progress' && progress === 0) {
+              return null;
+            }
+            
+            return (
+              <div key={book.id} className="book-card">
+                {isPurchased && <div className="purchased-indicator">Purchased</div>}
+                <img src={image} alt={title} className="book-cover" />
+                <h3>{title}</h3>
+                <p>by {author}</p>
+                
+                {activeTab !== 'marketplace' && progress > 0 && (
+                  <div className="progress-indicator">
+                    <div className="progress-bar">
+                      <div 
+                        className="progress-fill" 
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                    <span>{progress}% complete</span>
+                  </div>
+                )}
+                
+                {activeTab === 'marketplace' && (
+                  <p className="price">{parseInt(price || '0').toLocaleString()} sats</p>
+                )}
+                
+                <div className="book-actions">
+                  {isFree || isPurchased ? (
+                    <button 
+                      onClick={() => openFile(book)}
+                      className="access-btn"
+                    >
+                      📖 {isPurchased ? 'Read' : 'Access'}
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => purchaseBook(book)}
+                      className="purchase-btn"
+                      disabled={!connected}
+                    >
+                      ⚡ Buy Now
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {activeTab === 'library' && purchaseHistory.length === 0 && (
+            <div className="empty-state">
+              <p>Your library is empty. Purchase books from the marketplace to see them here.</p>
+            </div>
+          )}
+
+          {activeTab === 'progress' && ![...userProgress.values()].some(progress => progress > 0) && (
+            <div className="empty-state">
+              <p>No progress data available. Start reading books to track your progress.</p>
+            </div>
+          )}
+        </div>
+          </>
         )}
       </div>
     </div>
   );
 }
 
+export { AcademyStore };
 export default AcademyStore;

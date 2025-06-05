@@ -1,0 +1,20 @@
+/* Branding overrides with higher specificity */
+
+/* Academy title styling with higher specificity */
+h1.academy-title,
+.academy-title,
+[class*="academy-title"],
+div h1.academy-title,
+div [class*="academy-title"] {
+  color: #8B5CF6 !important; /* Light purple from home page background */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5) !important; /* Dark shadow as requested */
+}
+
+/* Academy tagline styling with higher specificity */
+p.academy-tagline,
+.academy-tagline,
+[class*="academy-tagline"],
+div p.academy-tagline,
+div [class*="academy-tagline"] {
+  color: #FFD700 !important; /* Gold color for tagline */
+}

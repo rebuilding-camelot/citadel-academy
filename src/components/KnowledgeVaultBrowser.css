@@ -1,0 +1,238 @@
+.knowledge-vault-browser {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-family, system-ui, -apple-system, sans-serif);
+}
+
+.vault-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.vault-header h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color, #6b46c1);
+}
+
+.vault-header p {
+  color: var(--text-secondary, #666);
+}
+
+.vault-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.type-filter {
+  width: 200px;
+}
+
+.type-filter select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+.vault-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: var(--bg-secondary, #f9f9f9);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+}
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.vault-item {
+  background-color: var(--bg-card, #fff);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.vault-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.item-header {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.file-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  color: var(--heading-color, #333);
+}
+
+.item-meta {
+  font-size: 0.8rem;
+  color: var(--text-tertiary, #888);
+  margin: 0;
+}
+
+.item-description {
+  padding: 15px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-tags {
+  padding: 0 15px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  background-color: var(--tag-bg, #f0f0f0);
+  color: var(--tag-text, #333);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.item-actions {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--border-color, #eee);
+}
+
+.item-actions button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.view-btn {
+  background-color: var(--primary-light, #e9e3f8);
+  color: var(--primary-color, #6b46c1);
+}
+
+.download-btn {
+  background-color: var(--primary-color, #6b46c1);
+  color: white;
+}
+
+.item-footer {
+  padding: 10px 15px;
+  background-color: var(--bg-secondary, #f9f9f9);
+  font-size: 0.8rem;
+  color: var(--text-tertiary, #888);
+  display: flex;
+  justify-content: space-between;
+}
+
+.encrypted-badge {
+  color: var(--encrypted-color, #e53e3e);
+}
+
+.empty-vault {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--bg-secondary, #f9f9f9);
+  border-radius: 8px;
+  color: var(--text-secondary, #666);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.knowledge-vault-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary-color, #6b46c1);
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .vault-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vault-controls {
+    flex-direction: column;
+  }
+  
+  .type-filter {
+    width: 100%;
+  }
+}

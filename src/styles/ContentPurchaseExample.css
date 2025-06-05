@@ -1,0 +1,66 @@
+.content-purchase-example {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.content-purchase-example h1 {
+  margin-bottom: 1.5rem;
+  color: var(--heading-color, #333);
+}
+
+.content-item {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--bg-primary, #ffffff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.content-item h2 {
+  margin-bottom: 0.75rem;
+  color: var(--heading-color, #333);
+}
+
+.content-preview {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: var(--bg-secondary, #f5f5f5);
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+.blur-text {
+  filter: blur(4px);
+  user-select: none;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.video-placeholder {
+  height: 200px;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+.video-placeholder::before {
+  content: '🔒';
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.video-placeholder span {
+  margin-top: 3rem;
+}
+
+.purchase-section {
+  margin-top: 1.5rem;
+}

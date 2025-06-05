@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2021",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -19,6 +19,7 @@
     "esModuleInterop": true,
     "downlevelIteration": true
   },
-  "include": ["src", "src/**/*.d.ts", "src/**/*.js.d.ts", "src/types", "src/lib/unified-event-manager.ts", "src/hooks/useCitadelEventManager.ts"],
+  "include": ["src", "src/**/*.d.ts", "src/**/*.js.d.ts", "src/types", "src/lib/unified-event-manager.ts", "src/hooks/useCitadelEventManager.ts", "src/components", "global.d.ts", "pages"],
+  "exclude": ["types", "components"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

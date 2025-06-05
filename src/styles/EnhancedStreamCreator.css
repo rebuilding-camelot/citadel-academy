@@ -1,0 +1,125 @@
+/* EnhancedStreamCreator.css */
+.enhanced-stream-creator {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 8px;
+}
+
+.enhanced-stream-creator h2 {
+  margin-bottom: 20px;
+  color: #f59e0b;
+}
+
+.enhanced-stream-creator h3 {
+  margin: 15px 0 10px;
+  color: #eab308;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: white;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.stream-type-selector {
+  margin: 20px 0;
+  padding: 15px;
+  background: #2a2a2a;
+  border-radius: 6px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 10px;
+}
+
+.stream-preview {
+  margin: 20px 0;
+  padding: 10px;
+  background: #000;
+  border-radius: 6px;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stream-preview video,
+.stream-preview canvas {
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.create-stream-btn {
+  background: linear-gradient(135deg, #F59E0B, #EAB308);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.2s ease;
+}
+
+.create-stream-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+}
+
+.create-stream-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .enhanced-stream-creator {
+    padding: 15px;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+  }
+}

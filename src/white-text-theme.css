@@ -1,34 +1,35 @@
 /* White Text Theme for Citadel Academy */
 
-/* Global text color override */
-body, 
-#root, 
-div, 
-p, 
-span, 
-h1, h2, h3, h4, h5, h6, 
-a, 
-button, 
-input, 
-textarea, 
-select, 
-option,
-.text,
-.content,
-.description,
-.header,
-.title,
-.meta,
-.extra,
-.item,
-.menu .item,
-.dropdown .item,
-.list .item,
-.card .content,
-.card .header,
-.card .meta,
-.card .description,
-.card .extra {
+/* Global text color override - with exceptions for styled elements */
+body:not([style*="color"]), 
+#root:not([style*="color"]), 
+div:not([style*="color"]), 
+p:not([style*="color"]), 
+span:not([style*="color"]), 
+h1:not([style*="color"]), h2:not([style*="color"]), h3:not([style*="color"]), 
+h4:not([style*="color"]), h5:not([style*="color"]), h6:not([style*="color"]), 
+a:not([style*="color"]), 
+button:not([style*="color"]), 
+input:not([style*="color"]), 
+textarea:not([style*="color"]), 
+select:not([style*="color"]), 
+option:not([style*="color"]),
+.text:not([style*="color"]),
+.content:not([style*="color"]),
+.description:not([style*="color"]),
+.header:not([style*="color"]),
+.title:not([style*="color"]),
+.meta:not([style*="color"]),
+.extra:not([style*="color"]),
+.item:not([style*="color"]),
+.menu .item:not([style*="color"]),
+.dropdown .item:not([style*="color"]),
+.list .item:not([style*="color"]),
+.card .content:not([style*="color"]),
+.card .header:not([style*="color"]),
+.card .meta:not([style*="color"]),
+.card .description:not([style*="color"]),
+.card .extra:not([style*="color"]) {
   color: white !important;
 }
 
@@ -37,15 +38,30 @@ option,
   color: #330066 !important; /* Dark purple */
 }
 
-/* Menu and feed button hover effects */
-.menu-item:hover, 
-.action-item:hover,
-.ui.menu .item:hover,
-.ui.dropdown .item:hover,
-.ui.list .item:hover,
-button:hover,
-.ui.button:hover,
-a:hover {
+/* Exceptions for CommunitiesNav - satellite-gold color */
+#root div[style*="background: rgb(42, 0, 102)"] a,
+#root div[style*="background: rgb(42, 0, 102)"] span,
+#root div[style*="background: rgb(42, 0, 102)"] .icon,
+#root div[style*="background: #2a0066"] a,
+#root div[style*="background: #2a0066"] span,
+#root div[style*="background: #2a0066"] .icon,
+#root div[style*="background: #2a0066"] div a,
+#root div[style*="background: #2a0066"] div span,
+#root div[style*="background: #2a0066"] div div,
+#root div[style*="background: #2a0066"] a span,
+#root div[style*="background: #2a0066"] div a span {
+  color: #F59E0B !important; /* satellite-gold */
+}
+
+/* Menu and feed button hover effects - with exceptions for styled elements */
+.menu-item:not([style*="color"]):hover, 
+.action-item:not([style*="color"]):hover,
+.ui.menu .item:not([style*="color"]):hover,
+.ui.dropdown .item:not([style*="color"]):hover,
+.ui.list .item:not([style*="color"]):hover,
+button:not([style*="color"]):hover,
+.ui.button:not([style*="color"]):hover,
+a:not([style*="color"]):hover {
   background-color: rgba(0, 83, 159, 0.5) !important;
   color: white !important;
 }
@@ -60,6 +76,14 @@ a:hover {
   color: white !important;
 }
 
+/* Exception for CommunitiesNav icons */
+#root div[style*="background: rgb(42, 0, 102)"] .icon,
+#root div[style*="background: rgb(42, 0, 102)"] i,
+#root div[style*="background: #2a0066"] .icon,
+#root div[style*="background: #2a0066"] i {
+  color: #F59E0B !important; /* satellite-gold */
+}
+
 /* Ensure all icons in the mobile navigation are white */
 #mobile-nav .icon,
 #mobile-nav i,
@@ -68,19 +92,42 @@ a:hover {
   filter: brightness(0) invert(1);
 }
 
-/* Override any dark text on hover */
-*:hover {
+/* Override any dark text on hover - with exceptions for styled elements */
+*:not([style*="color"]):hover {
   color: white !important;
 }
 
+/* Exception for CommunitiesNav hover */
+#root div[style*="background: rgb(42, 0, 102)"] a:hover,
+#root div[style*="background: rgb(42, 0, 102)"] span:hover,
+#root div[style*="background: rgb(42, 0, 102)"] .icon:hover,
+#root div[style*="background: #2a0066"] a:hover,
+#root div[style*="background: #2a0066"] span:hover,
+#root div[style*="background: #2a0066"] .icon:hover {
+  color: #F59E0B !important; /* satellite-gold */
+}
+
 /* Exceptions for buttons and navigation */
-button, 
-.ui.button, 
-.button,
 #main_nav,
 #main_nav a,
 #main_nav div,
 #main_nav span,
 #main_nav button {
   color: white !important;
+}
+
+/* Allow buttons to have their own text color */
+button:not([style*="color"]), 
+.ui.button:not([style*="color"]), 
+.button:not([style*="color"]) {
+  color: white !important;
+}
+
+/* Specific overrides for navigation items with gold text */
+.nav-item-gold,
+.nav-item-gold *,
+.nav-text-gold,
+div.nav-item-gold,
+span.nav-text-gold {
+  color: #F59E0B !important; /* satellite-gold */
 }

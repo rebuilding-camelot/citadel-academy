@@ -48,6 +48,9 @@ import SupportPage from './components/SupportPage';
 import MembersOnlyPage from './components/MembersOnlyPage';
 import NostrWalletConnectPage from './components/NostrWalletConnectPage';
 import AcademyStore from './components/AcademyStore';
+import KnowledgeVault from './components/KnowledgeVault';
+// KnowledgeVaultBrowser component has been removed
+import KnowledgeVaultPage from './pages/knowledge-vault';
 import Footer from './components/Footer';
 
 
@@ -81,7 +84,8 @@ class App extends Component {
       return null;
     }
 
-    if (!this.props.main) { return null; }
+    // Removed the check for this.props.main to ensure content always displays
+    // if (!this.props.main) { return null; }
 
     if (r === 'thread') {
       return mobile ? <PostFeed /> : <DirectoryPage />;
@@ -90,23 +94,16 @@ class App extends Component {
     return mobile ? (
       <div>
         <PublicationsNav hidden={r === 'thread'} onSelectSort={() => { return; }} />
-        {this.props.mobileNavMode === 'network' ? <FrontPageFeed hidden={r === 'thread'} style={{ paddingTop: 60 }} /> : (
-          <div style={{
-            paddingTop: 72,
-            paddingRight: 12,
-            paddingLeft: 12
-          }}>
-            <CommunityList
-              requireImage
-              requireSubscribed={this.props.communitiesNavMode === 'subscribed'}
-              // filter={this.props.communitiesNavMode === 'subscribed' ? (item) => {
-              //   return this.props.followingList[`34550:${item.event.pubkey}:${item.name}`]
-              // } : null}
-            />
-          </div>
-        )}
+        <FrontPageFeed hidden={r === 'thread'} style={{ paddingTop: 120 }} /> {/* Increased padding to account for the navigation */}
       </div>
-    ) : <DirectoryPage />;
+    ) : (
+      <div>
+        <PublicationsNav hidden={r === 'thread'} onSelectSort={() => { return; }} />
+        <div style={{ paddingTop: 60 }}> {/* Add padding for the navigation */}
+          <DirectoryPage />
+        </div>
+      </div>
+    );
   };
 
   renderMobileDimmer = () => {
@@ -203,6 +200,9 @@ class App extends Component {
         <Route exact path='/academystore/marketplace' component={AcademyStore} />
         <Route exact path='/academystore/library' component={AcademyStore} />
         <Route exact path='/academystore/product/:productId' component={AcademyStore} />
+        <Route exact path='/knowledge-vault' component={KnowledgeVaultPage} />
+        <Route exact path='/family-vault' component={KnowledgeVaultPage} />
+        {/* KnowledgeVaultBrowser route removed */}
         {mobile ? <AliasMenuMobile /> : null}
         {this.props.sidePanelSection ? <SidePanel /> : null}
         {this.props.displayQR ? <QRDisplay /> : null}

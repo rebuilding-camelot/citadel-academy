@@ -1,10 +1,11 @@
 /* Citadel Academy Theme CSS */
 
 :root {
-  --citadel-blue: #0053a0;
+  --citadel-blue: #F7931A; /* Changed from #0053a0 to Bitcoin Orange */
   --citadel-light-purple: #8B5CF6; /* Changed from #e6e6fa to match academy title */
   --citadel-text: #333333;
   --citadel-white: #ffffff;
+  --bitcoin-orange: #F7931A; /* Added Bitcoin Orange as a standard color */
 }
 
 body {
@@ -31,11 +32,29 @@ body {
   margin-top: -8px !important;
 }
 
-/* Make buttons visible */
-button, 
-.ui.button {
-  background-color: var(--citadel-blue) !important;
-  color: var(--citadel-white) !important;
+/* Button styling removed to allow component-level control */
+
+/* Menu and feed button hover effects */
+.menu-item:hover, 
+.action-item:hover,
+.ui.menu .item:hover,
+.ui.dropdown .item:hover,
+.ui.list .item:hover,
+button:hover,
+.ui.button:hover,
+a:hover {
+  background-color: rgba(0, 83, 159, 0.5) !important;
+  color: white !important;
+}
+
+/* Bitcoin Orange buttons should have black text */
+button[style*="background: #F7931A"],
+button[style*="background-color: #F7931A"],
+.ui.button[style*="background: #F7931A"],
+.ui.button[style*="background-color: #F7931A"],
+a[style*="background: #F7931A"],
+a[style*="background-color: #F7931A"] {
+  color: black !important;
 }
 
 /* Make text visible on light purple background */

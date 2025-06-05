@@ -1,0 +1,16 @@
+/* Color overrides with maximum specificity - loaded last */
+
+/* Academy title styling with maximum specificity */
+html body #root h1.academy-title, 
+html body #root .academy-title, 
+html body #root [class*="academy-title"] {
+  color: #8B5CF6 !important;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Academy tagline styling with maximum specificity */
+html body #root p.academy-tagline, 
+html body #root .academy-tagline, 
+html body #root [class*="academy-tagline"] {
+  color: #FFD700 !important; /* Gold color for tagline */
+}

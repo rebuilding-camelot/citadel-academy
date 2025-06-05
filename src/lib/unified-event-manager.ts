@@ -4,7 +4,7 @@ import { Event, getEventHash } from 'nostr-tools';
 import { finalizeEvent } from 'nostr-tools/pure';
 import NDK from '@nostr-dev-kit/ndk';
 import { NDKEvent } from '@nostr-dev-kit/ndk';
-import { updatePurchaseHistory } from './enhanced-progress';
+import { updatePurchaseHistory } from './progress';
 import { createPurchaseOrder } from './marketplace';
 import { getRelays } from './nostrUtils';
 

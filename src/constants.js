@@ -28,8 +28,9 @@ export const COLORS = {
 	primary: 'rgb(240, 240, 240)',
 	secondary: 'rgb(220, 220, 220)',
 	secondaryBright: 'rgb(150, 150, 150)',
-	satelliteGold: 'rgb(0, 83, 159)',
-	citadelBlue: 'rgb(0, 83, 159)',
+	satelliteGold: '#F59E0B', /* Updated to satellite-gold */
+	citadelBlue: 'rgb(247, 147, 26)', /* Changed to Bitcoin Orange */
+	bitcoinOrange: 'rgb(247, 147, 26)', /* Added Bitcoin Orange */
 	lightPurple: 'rgb(230, 230, 250)',
 	blue: 'rgb(0, 123, 255)',
 	red: 'rgb(219, 40, 40)',
@@ -57,7 +58,7 @@ export const CONTENT_MAX_WIDTH = 1600;
 export const MOBILE_BREAKPOINT = 884;
 export const EDITOR_LINE_HEIGHT = 24;
 export const MENU_WIDTH = 192;
-export const NAV_HEIGHT = 48;
+export const NAV_HEIGHT = 96; // Doubled from 48 to 96
 
 // Popular accounts for the "featured" feed so  new users
 // who are not signed in have something to look at

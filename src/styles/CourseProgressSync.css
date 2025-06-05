@@ -1,0 +1,94 @@
+.course-progress-sync {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.sync-status {
+  margin-bottom: 15px;
+}
+
+.sync-button {
+  background-color: #8B5CF6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sync-button:hover {
+  background-color: #7c3aed;
+}
+
+.mobile-actions {
+  margin-top: 10px;
+}
+
+.open-in-mobile-button {
+  background-color: white;
+  color: #8B5CF6;
+  border: 1px solid #8B5CF6;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.open-in-mobile-button:hover {
+  background-color: #8B5CF6;
+  color: white;
+}
+
+/* Status indicators */
+.course-progress-sync span {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.course-progress-sync span:first-child {
+  margin-right: 10px;
+}
+
+/* Success status */
+.course-progress-sync .sync-status:has(span:only-child) {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Error status */
+.course-progress-sync .sync-status:has(span:first-child:not(:only-child)) {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Syncing status */
+.course-progress-sync .sync-status:has(span:contains("Syncing")) {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .course-progress-sync {
+    padding: 12px;
+  }
+  
+  .sync-button, .open-in-mobile-button {
+    width: 100%;
+    margin-top: 8px;
+  }
+}

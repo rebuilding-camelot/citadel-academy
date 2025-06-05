@@ -10,9 +10,10 @@ import App from './App'
 import './index.css'
 import './background-fix.css'
 import './citadel-theme.css'
-import './white-text-theme.css'
 import './branding.css'
+import './branding-override.css'
 import './styles/academystore-library.css'
+import './color-overrides.css' // This must be imported last to override all other styles
 
 const Store = store();
 
